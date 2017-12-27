@@ -30,8 +30,10 @@ export default {
 }
 .input {
     width: 100%;
+    font-size: 26px;
+    line-height: 26px;
     color: rgba(0, 0, 0, 0.8);
-    padding: 3px 0;
+    padding: 3px 0 0;
     border: none;
     border-bottom: #eeeeee solid 1px;
 }

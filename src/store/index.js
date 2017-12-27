@@ -75,15 +75,43 @@ const store = {
 
         this.updateStorage(state);
     },
-    addBook (book) {
+    addBook (data) {
         if (this.debug) {
-            console.log('addBook triggered with', book);
+            console.log('addBook triggered with', data);
         }
         let state = this.state;
-        book.id = uuid.v4();
-        book.author = createAuthor(book);
-        book.series = createSeries(book);
-        state.books.push(book);
+
+        let series;
+        if (data.series) {
+            series = this.getSeries(data);
+            if (!series) {
+                series = createSeries(data);
+                state.series.push(series);
+            }
+        }
+
+        let book = {
+            id: uuid.v4(),
+            title: data.title,
+            series: series ? series.id : undefined,
+            bookNumber: data.bookNumber,
+        };
+        state.booksById[book.id] = book;
+        state.books.push(book.id);
+
+        if (data.firstName || data.lastName) {
+            let author = this.getAuthor(data);
+            if (!author) {
+                author = createAuthor(data);
+                state.authors.push(author);
+                state.booksAuthors.push({
+                    id: uuid.v4(),
+                    book: book.id,
+                    author: author.id,
+                });
+            }
+        }
+
         this.updateStorage(state);
     },
     removeBook (book) {
@@ -91,7 +119,11 @@ const store = {
             console.log('removeBook triggered with', book);
         }
         let state = this.state;
-        state.books.splice(state.books.indexOf(book), 1);
+        state.books.splice(state.books.indexOf(book.id), 1);
+        delete state.booksById[book.id];
+        state.booksAuthors = state.booksAuthors.filter(bookAuthor => {
+            return bookAuthor.book !== book.id;
+        });
         this.updateStorage(state);
     },
     updateStorage (state) {
@@ -101,30 +133,49 @@ const store = {
         // localStorage.setItem('vue-books', JSON.stringify(state));
         this.state = state;
     },
+    getAuthor (data) {
+        let authorId;
+        this.state.authors.forEach((author, i) => {
+            if (author.firstName.toLowerCase() === data.firstName.toLowerCase() &&
+                author.lastName.toLowerCase() === data.lastName.toLowerCase()) {
+                authorId = i;
+            }
+        });
+        return authorId;
+    },
+    getSeries (data) {
+        let seriesId;
+        this.state.series.forEach((series, i) => {
+            if (series.title.toLowerCase() === data.title.toLowerCase()) {
+                seriesId = i;
+            }
+        });
+        return seriesId;
+    },
 };
 
-const createAuthor = book => {
-    let author = {};
-    if (book.firstName) {
-        author.firstName = book.firstName;
-        delete book.firstName;
+const createAuthor = data => {
+    let author = {
+        id: uuid.v4(),
+    };
+    if (data.firstName) {
+        author.firstName = data.firstName;
     }
-    if (book.lastName) {
-        author.lastName = book.lastName;
-        delete book.lastName;
+    if (data.lastName) {
+        author.lastName = data.lastName;
     }
     return author;
 };
 
-const createSeries = book => {
-    let series = {};
-    if (book.series) {
-        series.series = book.series;
-        delete book.series;
+const createSeries = data => {
+    let series = {
+        id: uuid.v4(),
+    };
+    if (data.series) {
+        series.title = data.series;
     }
-    if (book.bookNumber) {
-        series.bookNumber = book.bookNumber;
-        delete book.bookNumber;
+    if (data.bookNumber) {
+        series.bookNumber = data.bookNumber;
     }
     return series;
 };

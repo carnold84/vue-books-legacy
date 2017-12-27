@@ -33,6 +33,7 @@ export default {
             return this.books.map(bookId => {
                 const data = this.booksById[bookId];
                 let book = {
+                    id: data.id,
                     title: data.title,
                     authors: this.getAuthors(data),
                     series: this.getSeries(data),
@@ -77,17 +78,22 @@ export default {
             return authorObjects;
         },
         getSeries (book) {
-            let series = undefined;
+            let series;
             if (book.series) {
                 series = this.series.filter(function (record) {
                     return record.id === book.series;
                 });
                 series = series ? series[0] : undefined;
             }
-            return series ? {
-                title: series.title,
-                url: `/series/${book.series}`,
-             } : undefined;
+
+            if (series) {
+                return {
+                    title: series.title,
+                    url: `/series/${book.series}`,
+                };
+            }
+
+            return series;
         },
     },
 };

@@ -5,18 +5,18 @@
                 <span class="title-text">{{book.title}}</span>
             </router-link>
         </div>
-        <div class="author">
+        <div v-if="book.authors" class="author">
             <router-link v-for="author in book.authors" :key="author.id" :to="author.url">
                 <span class="title-text">{{author.name}}</span>
             </router-link>
         </div>
-        <div class="series">
+        <div v-if="book.series" class="series">
             <router-link :to="book.series.url">
                 <span class="title-text">{{book.series.title}}</span>
             </router-link>
         </div>
         <div class="actions">
-            <button v-on:click="onRemove">Remove</button>
+            <button class="button" v-on:click="onRemove">Remove</button>
         </div>
     </div>
 </template>
@@ -84,6 +84,21 @@ export default {
     flex-basis: 30%;
 }
 .actions {
+    align-items: center;
     flex-shrink: 1;
+}
+.button {
+    height: 24px;
+    color: #ffffff;
+    padding: 0 10px;
+    border: #1e70ce solid 1px;
+    background-color: #1e70ce;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.button:hover {
+    color: #1e70ce;
+    border: #ffffff solid 1px;
+    background-color: #ffffff;
 }
 </style>
