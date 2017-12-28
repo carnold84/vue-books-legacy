@@ -6,7 +6,7 @@
         </header-bar>
         <div class="content">
             <list>
-                <list-item v-for="book in sortedBooks" :key="book.id" :book="book" />
+                <list-item v-for="book in sortedBooks" :key="book.id" :book="book" :onRemove="onRemove" />
             </list>
         </div>
     </div>
@@ -30,7 +30,19 @@ export default {
     },
     computed: {
         sortedBooks () {
-            return this.books.map(bookId => {
+            let author;
+            let series;
+            if (this.$route.name === 'Authors') {
+                author = this.authors.find(element => {
+                    return this.$route.params.name === element.id;
+                });
+            } else if (this.$route.name === 'Series') {
+                series = this.series.find(element => {
+                    return this.$route.params.title === element.id;
+                });
+            }
+            let books = [];
+            this.books.forEach(bookId => {
                 const data = this.booksById[bookId];
                 let book = {
                     id: data.id,
@@ -39,11 +51,29 @@ export default {
                     series: this.getSeries(data),
                     url: this.getUrl(data),
                 };
-                return book;
+                if (author) {
+                    author = book.authors.find(element => {
+                        return element.id === author.id;
+                    });
+                    if (author) {
+                        books.push(book);
+                    }
+                } else if (series) {
+                    if (book.series && book.series.id === series.id) {
+                        books.push(book);
+                    }
+                } else {
+                    books.push(book);
+                }
             });
+
+            return books;
         },
     },
     methods: {
+        onRemove (data) {
+            store.removeBook(data);
+        },
         getUrl (book) {
             return `/book/${book.id}`;
         },
@@ -71,7 +101,7 @@ export default {
                     authorObjects.push({
                         id: author.id,
                         name: values.join(', '),
-                        url: `/authors/${author.id}`,
+                        url: `/author/${author.id}`,
                     });
                 });
             }
@@ -88,6 +118,7 @@ export default {
 
             if (series) {
                 return {
+                    id: series.id,
                     title: series.title,
                     url: `/series/${book.series}`,
                 };

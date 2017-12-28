@@ -2,7 +2,9 @@
     <div id="edit-book">
         <header-bar>
             <div>
-                <router-link to="/">Vue Books</router-link> &gt; Add Book
+                <router-link to="/">
+                    <svg-icon name="back" :size="14"></svg-icon>
+                </router-link> Add Book
             </div>
         </header-bar>
         <div class="content">

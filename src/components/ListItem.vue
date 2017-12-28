@@ -16,20 +16,18 @@
             </router-link>
         </div>
         <div class="actions">
-            <button class="button" v-on:click="onRemove">Remove</button>
+            <button class="button" v-on:click="onRemoveClick">Remove</button>
         </div>
     </div>
 </template>
 
 <script>
-import store from '@/store';
-
 export default {
     name: 'ListItem',
-    props: ['book'],
+    props: ['book', 'onRemove'],
     methods: {
-        onRemove () {
-            store.removeBook(this.book);
+        onRemoveClick () {
+            this.onRemove(this.book);
         },
     },
 };
@@ -89,11 +87,12 @@ export default {
 }
 .button {
     height: 24px;
+    font-size: 12px;
     color: #ffffff;
     padding: 0 10px;
     border: #1e70ce solid 1px;
     background-color: #1e70ce;
-    border-radius: 15px;
+    border-radius: 3px;
     cursor: pointer;
 }
 .button:hover {

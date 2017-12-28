@@ -6747,6 +6747,10 @@ vue-style-loader@^3.0.0, vue-style-loader@^3.0.1:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
+vue-svg-custom-icon@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/vue-svg-custom-icon/-/vue-svg-custom-icon-1.0.6.tgz#3ef01311145f574d63ebdf46678bbad7999ea396"
+
 vue-template-compiler@^2.5.2:
   version "2.5.13"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.13.tgz#12a2aa0ecd6158ac5e5f14d294b0993f399c3d38"

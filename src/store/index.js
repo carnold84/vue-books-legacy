@@ -100,16 +100,17 @@ const store = {
         state.books.push(book.id);
 
         if (data.firstName || data.lastName) {
-            let author = this.getAuthor(data);
-            if (!author) {
-                author = createAuthor(data);
+            let authorId = this.getAuthor(data);
+            if (!authorId) {
+                const author = createAuthor(data);
+                authorId = author.id;
                 state.authors.push(author);
-                state.booksAuthors.push({
-                    id: uuid.v4(),
-                    book: book.id,
-                    author: author.id,
-                });
             }
+            state.booksAuthors.push({
+                id: uuid.v4(),
+                book: book.id,
+                author: authorId,
+            });
         }
 
         this.updateStorage(state);
@@ -130,24 +131,24 @@ const store = {
         if (this.debug) {
             console.log('updateStorage triggered with', state);
         }
-        // localStorage.setItem('vue-books', JSON.stringify(state));
+        localStorage.setItem('vue-books', JSON.stringify(state));
         this.state = state;
     },
     getAuthor (data) {
         let authorId;
-        this.state.authors.forEach((author, i) => {
+        this.state.authors.forEach(author => {
             if (author.firstName.toLowerCase() === data.firstName.toLowerCase() &&
                 author.lastName.toLowerCase() === data.lastName.toLowerCase()) {
-                authorId = i;
+                authorId = author.id;
             }
         });
         return authorId;
     },
     getSeries (data) {
         let seriesId;
-        this.state.series.forEach((series, i) => {
+        this.state.series.forEach(series => {
             if (series.title.toLowerCase() === data.title.toLowerCase()) {
-                seriesId = i;
+                seriesId = series.id;
             }
         });
         return seriesId;
@@ -168,16 +169,10 @@ const createAuthor = data => {
 };
 
 const createSeries = data => {
-    let series = {
+    return {
         id: uuid.v4(),
+        title: data.series,
     };
-    if (data.series) {
-        series.title = data.series;
-    }
-    if (data.bookNumber) {
-        series.bookNumber = data.bookNumber;
-    }
-    return series;
 };
 
 export default store;
