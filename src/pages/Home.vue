@@ -52,10 +52,10 @@ export default {
                     url: this.getUrl(data),
                 };
                 if (author) {
-                    author = book.authors.find(element => {
+                    const isByAuthor = book.authors.find(element => {
                         return element.id === author.id;
                     });
-                    if (author) {
+                    if (isByAuthor) {
                         books.push(book);
                     }
                 } else if (series) {

@@ -5,13 +5,13 @@
                 <span class="title-text">{{book.title}}</span>
             </router-link>
         </div>
-        <div v-if="book.authors" class="author">
-            <router-link v-for="author in book.authors" :key="author.id" :to="author.url">
+        <div class="author">
+            <router-link v-if="book.authors" v-for="author in book.authors" :key="author.id" :to="author.url">
                 <span class="title-text">{{author.name}}</span>
             </router-link>
         </div>
-        <div v-if="book.series" class="series">
-            <router-link :to="book.series.url">
+        <div class="series">
+            <router-link v-if="book.series" :to="book.series.url">
                 <span class="title-text">{{book.series.title}}</span>
             </router-link>
         </div>

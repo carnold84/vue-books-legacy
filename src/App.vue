@@ -27,6 +27,9 @@ a, a:link, a:visited {
     color: #1e70ce;
     text-decoration: none;
 }
+button {
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
 #app {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 15px;

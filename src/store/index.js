@@ -85,7 +85,7 @@ const store = {
         if (data.series) {
             series = this.getSeries(data);
             if (!series) {
-                series = createSeries(data);
+                series = createSeries(data).id;
                 state.series.push(series);
             }
         }
@@ -93,7 +93,7 @@ const store = {
         let book = {
             id: uuid.v4(),
             title: data.title,
-            series: series ? series.id : undefined,
+            series: series,
             bookNumber: data.bookNumber,
         };
         state.booksById[book.id] = book;
@@ -147,7 +147,7 @@ const store = {
     getSeries (data) {
         let seriesId;
         this.state.series.forEach(series => {
-            if (series.title.toLowerCase() === data.title.toLowerCase()) {
+            if (series.title.toLowerCase() === data.series.toLowerCase()) {
                 seriesId = series.id;
             }
         });
