@@ -27,11 +27,27 @@ a, a:link, a:visited {
     color: #1e70ce;
     text-decoration: none;
 }
+a:hover {
+    color: #e98400;
+}
 button {
-    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
+}
+.svg-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    color: inherit;
+    vertical-align: middle;
+    fill: none;
+    stroke: currentColor;
+}
+.svg-fill {
+    fill: currentColor;
+    stroke: none;
 }
 #app {
-    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
     font-size: 15px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -39,7 +55,7 @@ button {
 .anim-section {
     opacity: 0;
     transform: translate3d(0, 50px, 0);
-    transition: transform 500ms ease-out, opacity 500ms ease-out;
+    transition: transform 350ms ease-out, opacity 350ms ease-out;
 }
 .show .anim-section {
     opacity: 1;

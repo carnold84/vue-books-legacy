@@ -2,11 +2,18 @@
     <div id="home">
         <header-bar>
             <h1>Vue Books</h1>
-            <router-link to="/add-book">Add</router-link>
         </header-bar>
+        <action-bar>
+            <div class="action-bar-content">
+                <h2>Books</h2>
+            </div>
+            <div class="action-bar-actions">
+                <link-button :to="'/add-book'" :is-primary="true">Add</link-button>
+            </div>
+        </action-bar>
         <div class="content">
             <list>
-                <list-item v-for="book in sortedBooks" :key="book.id" :book="book" :onRemove="onRemove" />
+                <list-item-container v-for="book in sortedBooks" :key="book.id" :book="book" :onRemove="onRemove" />
             </list>
         </div>
     </div>
@@ -15,8 +22,10 @@
 <script>
 import store from '@/store';
 import HeaderBar from '@/components/HeaderBar';
+import ActionBar from '@/components/ActionBar';
 import List from '@/components/List';
-import ListItem from '@/components/ListItem';
+import ListItemContainer from '@/containers/ListItem';
+import LinkButton from '@/components/LinkButton';
 
 export default {
     name: 'Home',
@@ -26,7 +35,9 @@ export default {
     components: {
         HeaderBar,
         List,
-        ListItem,
+        ListItemContainer,
+        ActionBar,
+        LinkButton,
     },
     computed: {
         sortedBooks () {
@@ -49,6 +60,7 @@ export default {
                     title: data.title,
                     authors: this.getAuthors(data),
                     series: this.getSeries(data),
+                    bookNumber: data.bookNumber,
                     url: this.getUrl(data),
                 };
                 if (author) {
@@ -145,15 +157,14 @@ export default {
     display: flex;
 }
 h1 {
-    font-weight: 700;
     font-size: 1em;
+    font-weight: normal;
     color: #1e70ce;
 }
 h2 {
-    font-weight: 700;
-    font-size: 1em;
-    margin: 0 0 10px;
-    color: #1e70ce;
+    font-size: 1.2em;
+    font-weight: normal;
+    margin: 0;
 }
 ul {
     list-style-type: none;

@@ -1,10 +1,9 @@
 <template>
     <div id="edit-book">
         <header-bar>
-            <div>
-                <router-link to="/">
-                    <svg-icon name="back" :size="14"></svg-icon>
-                </router-link> Add Book
+            <div class="header-content">
+                <router-link to="/">Vue Books</router-link>
+                <h2>/ Add Book</h2>
             </div>
         </header-bar>
         <div class="content">
@@ -25,7 +24,7 @@
                     <text-field label="Book Number" name="bookNumber" />
                 </div>
                 <div class="buttons anim-section">
-                    <input class="button" type="submit" value="Add" />
+                    <ui-button :isPrimary="true">Save Book</ui-button>
                 </div>
             </form>
         </div>
@@ -37,6 +36,7 @@ import serialize from 'form-serialize';
 import store from '@/store';
 import HeaderBar from '@/components/HeaderBar';
 import TextField from '@/components/TextField';
+import UiButton from '@/components/UiButton';
 
 export default {
     name: 'EditBook',
@@ -44,11 +44,12 @@ export default {
     components: {
         HeaderBar,
         TextField,
+        UiButton,
     },
     mounted () {
         const els = document.querySelectorAll('.anim-section');
         els.forEach((el, i) => {
-            el.style.transitionDelay = `${i * 100}ms`;
+            el.style.transitionDelay = `${i * 30}ms`;
         });
         const wrapper = document.querySelector('#edit-book');
         wrapper.classList.add('show');
@@ -93,7 +94,16 @@ export default {
 .button:hover {
     background-color: #3282df;
 }
-a {
-    font-weight: 700;
+.header-content {
+    align-items: center;
+    display: flex;
+}
+.header-content h2 {
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+}
+.header-content a {
+    margin: 0 5px 0 0;
 }
 </style>
