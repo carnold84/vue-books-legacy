@@ -9,19 +9,19 @@
         <div class="content">
             <form v-on:submit.prevent="onSubmit">
                 <div class="anim-section">
-                    <text-field label="Title" name="title" />
+                    <text-field label="Title" name="title" :value="book.title" />
                 </div>
                 <div class="anim-section">
-                    <text-field label="Author's First Name" name="firstName" />
+                    <text-field label="Author's First Name" name="firstName" :value="book.firstName" />
                 </div>
                 <div class="anim-section">
-                    <text-field label="Author's Last Name" name="lastName" />
+                    <text-field label="Author's Last Name" name="lastName" :value="book.lastName" />
                 </div>
                 <div class="anim-section">
-                    <text-field label="Series" name="series" />
+                    <text-field label="Series" name="series" :value="book.series" />
                 </div>
                 <div class="anim-section">
-                    <text-field label="Book Number" name="bookNumber" />
+                    <text-field label="Book Number" name="bookNumber" :value="book.bookNumber" />
                 </div>
                 <div class="buttons anim-section">
                     <ui-button :isPrimary="true">Save Book</ui-button>
@@ -34,17 +34,20 @@
 <script>
 import serialize from 'form-serialize';
 import store from '@/store';
+import {getAuthors, getSeries} from '@/utils/book';
 import HeaderBar from '@/components/HeaderBar';
 import TextField from '@/components/TextField';
 import UiButton from '@/components/UiButton';
 
 export default {
     name: 'EditBook',
-    props: ['book'],
     components: {
         HeaderBar,
         TextField,
         UiButton,
+    },
+    data () {
+        return store.state;
     },
     mounted () {
         const els = document.querySelectorAll('.anim-section');
@@ -54,9 +57,32 @@ export default {
         const wrapper = document.querySelector('#edit-book');
         wrapper.classList.add('show');
     },
+    computed: {
+        book () {
+            let book = {};
+
+            if (this.$route.params.id) {
+                const data = this.booksById[this.$route.params.id];
+
+                const authors = getAuthors(data, this.authors, this.booksAuthors);
+                const series = getSeries(data, this.series, this.booksSeries);
+                book = {
+                    id: data.id,
+                    title: data.title,
+                    firstName: authors ? authors[0].firstName : undefined,
+                    lastName: authors ? authors[0].lastName : undefined,
+                    series: series ? series.title : undefined,
+                    bookNumber: data.bookNumber,
+                };
+            }
+
+            return book;
+        },
+    },
     methods: {
         onSubmit (evt) {
             const data = serialize(evt.target, { hash: true });
+            data.id = this.$route.params.id;
             store.addBook(data);
             this.$router.go(-1);
         },
@@ -104,6 +130,12 @@ export default {
     margin: 0;
 }
 .header-content a {
-    margin: 0 5px 0 0;
+    border-bottom: #ffffff dotted 1px;
+    margin: 1px 5px 0 0;
+}
+.header-content a:hover {
+    color: #e98400;
+    border-bottom: #e98400 dotted 1px;
+    margin: 1px 5px 0 0;
 }
 </style>

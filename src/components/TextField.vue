@@ -1,14 +1,14 @@
 <template>
     <div class="text-field">
         <label class="label" :for="name">{{label}}</label>
-        <input class="input" :id="name" type="text" :name="name" />
+        <input class="input" :id="name" type="text" :name="name" :value="value" />
     </div>
 </template>
 
 <script>
 export default {
     name: 'TextField',
-    props: ['label', 'name'],
+    props: ['label', 'name', 'value'],
 };
 </script>
 

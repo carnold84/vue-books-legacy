@@ -24,13 +24,11 @@ const store = {
                     '1': {
                         id: '1',
                         title: 'The Spy Who Read Me',
-                        series: '1',
                         bookNumber: '1',
                     },
                     '2': {
                         id: '2',
                         title: 'Harry Booker and the Editor\'s Stone',
-                        series: '2',
                         bookNumber: '1',
                     },
                 },
@@ -68,6 +66,18 @@ const store = {
                         title: 'The Harry Booker Chronicles',
                     },
                 ],
+                booksSeries: [
+                    {
+                        id: '1',
+                        book: '1',
+                        series: '1',
+                    },
+                    {
+                        id: '2',
+                        book: '2',
+                        series: '2',
+                    },
+                ],
             };
         } else {
             state = JSON.parse(state);
@@ -81,23 +91,37 @@ const store = {
         }
         let state = this.state;
 
-        let series;
-        if (data.series) {
-            series = this.getSeries(data);
-            if (!series) {
-                series = createSeries(data).id;
-                state.series.push(series);
-            }
-        }
-
         let book = {
-            id: uuid.v4(),
+            id: data.id ? data.id : uuid.v4(),
             title: data.title,
-            series: series,
             bookNumber: data.bookNumber,
         };
         state.booksById[book.id] = book;
-        state.books.push(book.id);
+
+        if (data.id) {
+            let index = state.books.indexOf(book.id);
+            if (index) {
+                state.books.splice(index, 1, [book.id]);
+            } else {
+                console.error('Could not update ', book.title);
+            }
+        } else {
+            state.books.push(book.id);
+        }
+
+        if (data.series) {
+            let series;
+            series = this.getSeries(data);
+            if (!series) {
+                series = createSeries(data);
+                state.series.push(series);
+            }
+            state.booksSeries.push({
+                id: uuid.v4(),
+                book: book.id,
+                series: series.id,
+            });
+        }
 
         if (data.firstName || data.lastName) {
             let authorId = this.getAuthor(data);
@@ -145,13 +169,13 @@ const store = {
         return authorId;
     },
     getSeries (data) {
-        let seriesId;
+        let bookSeries;
         this.state.series.forEach(series => {
             if (series.title.toLowerCase() === data.series.toLowerCase()) {
-                seriesId = series.id;
+                bookSeries = series;
             }
         });
-        return seriesId;
+        return bookSeries;
     },
 };
 

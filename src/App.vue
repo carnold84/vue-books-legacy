@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <router-view/>
+        <router-view />
     </div>
 </template>
 
@@ -49,6 +49,7 @@ button {
 #app {
     font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
     font-size: 15px;
+    color: rgba(0, 0, 0, 0.8);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }

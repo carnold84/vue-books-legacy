@@ -1,13 +1,13 @@
 <template>
     <div class="list-item">
         <div class="cell">
-            <router-link :to="url">
-                <span class="title-text">{{title}}</span>
-            </router-link>
+            <!-- <router-link :to="url"> -->
+                <span>{{title}}</span>
+            <!-- </router-link> -->
         </div>
         <div class="cell">
             <router-link v-if="authors" v-for="author in authors" :key="author.id" :to="author.url">
-                <span class="title-text">{{author.name}}</span>
+                <span class="title-text">{{`${author.lastName}, ${author.firstName}`}}</span>
             </router-link>
         </div>
         <div class="cell">
@@ -19,6 +19,7 @@
             <span v-if="bookNumber">{{`Book ${bookNumber}`}}</span>
         </div>
         <div class="actions">
+            <link-button :to="editUrl">Edit</link-button>
             <ui-button :onClick="onRemove">Remove</ui-button>
         </div>
     </div>
@@ -26,19 +27,25 @@
 
 <script>
 import UiButton from '@/components/UiButton';
+import LinkButton from '@/components/LinkButton';
 
 export default {
     name: 'ListItem',
     components: {
         UiButton,
+        LinkButton,
     },
     props: {
         title: String,
         url: String,
+        editUrl: String,
         authors: Array,
         series: Object,
         bookNumber: String,
         onRemove: Function,
+    },
+    methods: {
+
     },
 };
 </script>
@@ -47,7 +54,7 @@ export default {
 <style scoped>
 .list-item {
     height: 50px;
-    padding: 0 20px;
+    padding: 0 10px;
     border-bottom: #dddddd solid 1px;
     align-items: center;
     justify-content: flex-start;
@@ -92,5 +99,12 @@ export default {
     padding: 0 0 0 10px;
     align-items: center;
     flex-shrink: 1;
+    display: flex;
+}
+.actions > * {
+    margin: 0 10px 0 0;
+}
+.actions > :last-child {
+    margin: 0;
 }
 </style>

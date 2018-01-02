@@ -3,15 +3,17 @@
         <header-bar>
             <h1>Vue Books</h1>
         </header-bar>
-        <action-bar>
-            <div class="action-bar-content">
-                <h2>Books</h2>
-            </div>
-            <div class="action-bar-actions">
-                <link-button :to="'/add-book'" :is-primary="true">Add</link-button>
-            </div>
-        </action-bar>
         <div class="content">
+            <action-bar :hasBorder="false">
+                <div class="action-bar-content">
+                    <h2>Books</h2>
+                </div>
+                <div class="action-bar-actions">
+                    <router-link class="round-button" :to="'/add-book'">
+                        <svgicon name="add" width="20" height="20"></svgicon>
+                    </router-link>
+                </div>
+            </action-bar>
             <list>
                 <list-item-container v-for="book in sortedBooks" :key="book.id" :book="book" :onRemove="onRemove" />
             </list>
@@ -21,11 +23,12 @@
 
 <script>
 import store from '@/store';
+import {getAuthors, getSeries} from '@/utils/book';
 import HeaderBar from '@/components/HeaderBar';
 import ActionBar from '@/components/ActionBar';
 import List from '@/components/List';
 import ListItemContainer from '@/containers/ListItem';
-import LinkButton from '@/components/LinkButton';
+import '@/compiled-icons/add';
 
 export default {
     name: 'Home',
@@ -37,7 +40,6 @@ export default {
         List,
         ListItemContainer,
         ActionBar,
-        LinkButton,
     },
     computed: {
         sortedBooks () {
@@ -58,10 +60,11 @@ export default {
                 let book = {
                     id: data.id,
                     title: data.title,
-                    authors: this.getAuthors(data),
-                    series: this.getSeries(data),
+                    authors: getAuthors(data, this.authors, this.booksAuthors),
+                    series: getSeries(data, this.series, this.booksSeries),
                     bookNumber: data.bookNumber,
                     url: this.getUrl(data),
+                    editUrl: this.getEditUrl(data),
                 };
                 if (author) {
                     const isByAuthor = book.authors.find(element => {
@@ -89,54 +92,8 @@ export default {
         getUrl (book) {
             return `/book/${book.id}`;
         },
-        getAuthors (book) {
-            const authorIds = [];
-            this.booksAuthors.forEach(function (record) {
-                if (record.book === book.id) {
-                    authorIds.push(record.author);
-                }
-            });
-            const authors = this.authors.filter(function (author) {
-                return authorIds.includes(author.id);
-            });
-
-            let authorObjects = [];
-            if (authors) {
-                authors.forEach(function (author) {
-                    let values = [];
-                    if (author.lastName) {
-                        values.push(author.lastName);
-                    }
-                    if (author.firstName) {
-                        values.push(author.firstName);
-                    }
-                    authorObjects.push({
-                        id: author.id,
-                        name: values.join(', '),
-                        url: `/author/${author.id}`,
-                    });
-                });
-            }
-            return authorObjects;
-        },
-        getSeries (book) {
-            let series;
-            if (book.series) {
-                series = this.series.filter(function (record) {
-                    return record.id === book.series;
-                });
-                series = series ? series[0] : undefined;
-            }
-
-            if (series) {
-                return {
-                    id: series.id,
-                    title: series.title,
-                    url: `/series/${book.series}`,
-                };
-            }
-
-            return series;
+        getEditUrl (book) {
+            return `/edit-book/${book.id}`;
         },
     },
 };
@@ -156,10 +113,29 @@ export default {
     flex-direction: column;
     display: flex;
 }
+.round-button {
+    width: 28px;
+    height: 28px;
+    color: rgba(0, 0, 0, 0.65);
+    border: #dddddd solid 1px;
+    background-color: #ffffff;
+    border-radius: 14px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 1px 1px;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.round-button:hover {
+    color: #ffffff;
+    background-color: #1e70ce;
+    border: #1e70ce solid 1px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 1px 3px;
+}
 h1 {
     font-size: 1em;
     font-weight: normal;
-    color: #1e70ce;
+    color: #ffffff;
 }
 h2 {
     font-size: 1.2em;

@@ -28,5 +28,10 @@ export default new Router({
             name: 'AddBook',
             component: EditBook,
         },
+        {
+            path: '/edit-book/:id',
+            name: 'EditBook',
+            component: EditBook,
+        },
     ],
 });

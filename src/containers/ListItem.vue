@@ -2,6 +2,7 @@
     <list-item 
         :title="book.title"
         :url="book.url"
+        :editUrl="book.editUrl"
         :authors="book.authors"
         :series="book.series"
         :bookNumber="book.bookNumber"

@@ -38,6 +38,7 @@ export default {
 .ui-button {
     height: 24px;
     font-size: 12px;
+    line-height: 15px;
     color: rgba(0, 0, 0, 0.65);
     padding: 0 10px;
     border: #dddddd solid 1px;
