@@ -7,7 +7,7 @@ import router from './router';
 import VueSVGIcon from 'vue-svgicon';
 
 Vue.use(VueSVGIcon);
-Vue.use(VueSVGCustomIcon, { basePath: '/static/svg' });
+Vue.use(VueSVGCustomIcon, { basePath: 'static/svg' });
 
 Vue.config.productionTip = false;
 
