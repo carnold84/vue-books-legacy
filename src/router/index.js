@@ -7,6 +7,7 @@ Vue.use(Router);
 
 export default new Router({
     mode: 'history',
+    base: 'https://carnold84.github.io/vue-books/',
     routes: [
         {
             path: '/',
