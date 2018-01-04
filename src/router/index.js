@@ -7,7 +7,6 @@ Vue.use(Router);
 
 export default new Router({
     mode: 'history',
-    base: 'https://carnold84.github.io/vue-books/',
     routes: [
         {
             path: '/',
@@ -33,6 +32,10 @@ export default new Router({
             path: '/edit-book/:id',
             name: 'EditBook',
             component: EditBook,
+        },
+        {
+            path: '*',
+            redirect: '/',
         },
     ],
 });
