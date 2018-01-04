@@ -34,9 +34,5 @@ export default new Router({
             name: 'EditBook',
             component: EditBook,
         },
-        {
-            path: '*',
-            redirect: '/',
-        },
     ],
 });
