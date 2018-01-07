@@ -6,7 +6,6 @@ import EditBook from '@/pages/EditBook';
 Vue.use(Router);
 
 export default new Router({
-    mode: 'history',
     base: '/demo/',
     routes: [
         {
