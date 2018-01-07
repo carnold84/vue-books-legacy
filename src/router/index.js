@@ -5,9 +5,11 @@ import EditBook from '@/pages/EditBook';
 
 Vue.use(Router);
 
+const isDemo = true;
+
 export default new Router({
-    mode: 'history',
-    base: window.location.pathname,
+    mode: isDemo ? 'hash' : 'history',
+    base: '/demo/',
     routes: [
         {
             path: '/',
