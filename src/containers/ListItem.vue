@@ -18,7 +18,7 @@ export default {
     props: ['book', 'onRemove'],
     methods: {
         onRemoveClick () {
-            this.onRemove(this.book);
+            this.onRemove(this.book.id);
         },
     },
     components: {

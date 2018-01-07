@@ -24,7 +24,7 @@ export default {
 }
 .label {
     width: 100%;
-    font-size: 13px;
+    font-size: 14px;
     color: rgba(0, 0, 0, 0.5);
     margin: 0 0 5px;
 }

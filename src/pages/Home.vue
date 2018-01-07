@@ -4,7 +4,7 @@
             <h1>Vue Books</h1>
         </header-bar>
         <div class="content">
-            <action-bar :hasBorder="false">
+            <action-bar :hasBorder="sortedBooks.length === 0">
                 <div class="action-bar-content">
                     <h2>Books</h2>
                 </div>
@@ -14,9 +14,13 @@
                     </router-link>
                 </div>
             </action-bar>
-            <list>
+            <list v-if="sortedBooks.length > 0">
                 <list-item-container v-for="book in sortedBooks" :key="book.id" :book="book" :onRemove="onRemove" />
             </list>
+            <content-message v-if="sortedBooks.length === 0">
+                <p>You don't have any books yet.</p>
+                <link-button to="/add-book">Add One</link-button>
+            </content-message>
         </div>
     </div>
 </template>
@@ -26,6 +30,8 @@ import store from '@/store';
 import {getAuthors, getSeries} from '@/utils/book';
 import HeaderBar from '@/components/HeaderBar';
 import ActionBar from '@/components/ActionBar';
+import ContentMessage from '@/components/ContentMessage';
+import LinkButton from '@/components/LinkButton';
 import List from '@/components/List';
 import ListItemContainer from '@/containers/ListItem';
 import '@/compiled-icons/add';
@@ -37,9 +43,11 @@ export default {
     },
     components: {
         HeaderBar,
+        ActionBar,
+        ContentMessage,
         List,
         ListItemContainer,
-        ActionBar,
+        LinkButton,
     },
     computed: {
         sortedBooks () {
@@ -86,8 +94,8 @@ export default {
         },
     },
     methods: {
-        onRemove (data) {
-            store.removeBook(data);
+        onRemove (id) {
+            store.removeBook(id);
         },
         getUrl (book) {
             return `/book/${book.id}`;
@@ -133,9 +141,10 @@ export default {
     box-shadow: rgba(0, 0, 0, 0.25) 0 1px 3px;
 }
 h1 {
-    font-size: 1em;
+    font-size: 1.1em;
     font-weight: normal;
     color: #ffffff;
+    margin: 0;
 }
 h2 {
     font-size: 1.2em;

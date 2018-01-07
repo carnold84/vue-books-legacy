@@ -9,8 +9,9 @@ export const getAuthors = (book, authors, booksAuthors) => {
         return authorIds.includes(author.id);
     });
 
-    let authorObjects = [];
-    if (bookAuthors) {
+    let authorObjects;
+    if (bookAuthors.length > 0) {
+        authorObjects = [];
         bookAuthors.forEach(function (author) {
             authorObjects.push({
                 id: author.id,

@@ -24,7 +24,7 @@
                     <text-field label="Book Number" name="bookNumber" :value="book.bookNumber" />
                 </div>
                 <div class="buttons anim-section">
-                    <ui-button :isPrimary="true">Save Book</ui-button>
+                    <ui-button :isPrimary="true" :height="32">Save Book</ui-button>
                 </div>
             </form>
         </div>

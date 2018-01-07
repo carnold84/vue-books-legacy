@@ -14,7 +14,7 @@ export default {
 <style scoped>
 .header-bar {
     width: 100%;
-    height: 40px;
+    height: 50px;
     font-size: 1em;
     color: #ffffff;
     margin: 0;

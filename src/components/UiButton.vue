@@ -2,12 +2,14 @@
     <button 
         v-if="isButton"
         v-on:click="onClick ? onClick() : ''"
-        :class="{'ui-button': true, 'is-primary': isPrimary }">
+        :class="{'ui-button': true, 'is-primary': isPrimary }"
+        :style="style">
         <slot></slot>
     </button>
     <div
         v-else
         :class="{'ui-button': true, 'is-primary': isPrimary }"
+        :style="style"
         v-on:click="onClick ? onClick() : ''">
         <slot></slot>
     </div>
@@ -29,6 +31,17 @@ export default {
             type: Function,
             default: null,
         },
+        height: {
+            type: Number,
+            default: 28,
+        },
+    },
+    computed: {
+        style () {
+            return {
+                height: `${this.height}px`,
+            };
+        },
     },
 };
 </script>
@@ -36,11 +49,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .ui-button {
-    height: 24px;
-    font-size: 12px;
-    line-height: 15px;
+    font-size: 14px;
+    line-height: 17px;
     color: rgba(0, 0, 0, 0.65);
-    padding: 0 10px;
+    padding: 0 15px;
     border: #dddddd solid 1px;
     background-color: #ffffff;
     border-radius: 3px;
