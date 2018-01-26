@@ -44,9 +44,6 @@ export default {
         bookNumber: String,
         onRemove: Function,
     },
-    methods: {
-
-    },
 };
 </script>
 

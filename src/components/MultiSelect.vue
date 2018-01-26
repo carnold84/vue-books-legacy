@@ -1,0 +1,88 @@
+<template>
+    <div class="multi-select-container">
+        <multiselect
+            v-model="selected"
+            :options="options"
+            :customLabel="label"
+            :hideSelected="true"
+            :placeholder="placeholder"
+            track-by="id"
+            :multiple="multiple"
+            @input="updateSelected" />
+    </div>
+</template>
+
+<script>
+import Multiselect from 'vue-multiselect';
+
+export default {
+    name: 'MultiSelect',
+    components: {
+        Multiselect,
+    },
+    data () {
+        return {
+            selected: null,
+            options: this.items,
+        };
+    },
+    props: {
+        items: {
+            type: Array,
+            required: true,
+        },
+        onChange: {
+            type: Function,
+            required: true,
+        },
+        multiple: {
+            type: Boolean,
+            default: false,
+        },
+        placeholder: String,
+    },
+    methods: {
+        label (item) {
+            return item.label;
+        },
+        updateSelected (result) {
+            this.onChange(result);
+        },
+    },
+};
+</script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.multi-select-container {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    display: flex;
+}
+</style>
+<style lang="scss">
+.multiselect__tag {
+    background: #1e70ce;
+}
+.multiselect__tag-icon {
+    &:focus {
+        background: #1e70ce;
+    }
+    &:hover {
+        background: darken(#1e70ce, 10);
+    }
+    &:after {
+        color: #ffffff;
+    }
+}
+.multiselect__option--highlight {
+    background: #1e70ce;
+}
+.multiselect__option--highlight::after {
+    background: #1e70ce;
+}
+</style>

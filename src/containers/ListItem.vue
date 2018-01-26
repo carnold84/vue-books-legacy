@@ -3,8 +3,8 @@
         :title="book.title"
         :url="book.url"
         :editUrl="book.editUrl"
-        :authors="book.authors"
-        :series="book.series"
+        :authors="authors"
+        :series="series"
         :bookNumber="book.bookNumber"
         :onRemove="onRemoveClick"
     />
@@ -23,6 +23,22 @@ export default {
     },
     components: {
         ListItem,
+    },
+    computed: {
+        authors () {
+            return this.book.authors.map(author => {
+                return {
+                    ...author,
+                    url: `/author/${author.id}`,
+                };
+            });
+        },
+        series () {
+            return {
+                ...this.book.series,
+                url: `/series/${this.book.series.id}`,
+            };
+        },
     },
 };
 </script>

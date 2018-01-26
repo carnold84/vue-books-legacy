@@ -3,47 +3,51 @@ import api from '../api/local-storage';
 const store = {
     debug: true,
     state: {
-        books: [],
-        booksById: {},
-        authors: [],
-        booksAuthors: [],
-        series: [],
-        booksSeries: [],
+        books: {
+            allIds: [],
+            byId: {},
+        },
+        authors: {
+            allIds: [],
+            byId: {},
+        },
+        authorBook: [],
+        series: {
+            allIds: [],
+            byId: {},
+        },
+        seriesBook: [],
     },
     init () {
         if (this.debug) {
-            console.log('init triggered');
+            console.info('init triggered');
         }
 
-        api.getState(response => {
-            this.updateState(response.data);
+        api.getAllData(response => {
+            this.state = response.data;
         });
     },
     addBook (data) {
         if (this.debug) {
-            console.log('addBook triggered with', data);
+            console.info('addBook triggered with', data);
         }
 
-        api.addBook(data, () => {
-            api.getState(response => {
-                this.updateState(response.data);
-            });
+        api.addBook(data, response => {
+            this.state = response.data;
         });
     },
     removeBook (id) {
         if (this.debug) {
-            console.log('removeBook triggered with', id);
+            console.info('removeBook triggered with', id);
         }
 
-        api.removeBook(id, () => {
-            api.getState(response => {
-                this.updateState(response.data);
-            });
+        api.removeBook(id, response => {
+            this.state = response.data;
         });
     },
     updateState (state) {
         if (this.debug) {
-            console.log('updateState triggered with', state);
+            console.info('updateState triggered with', state);
         }
         this.state = state;
     },

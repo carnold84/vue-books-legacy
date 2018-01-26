@@ -1,6 +1,6 @@
-export const getAuthors = (book, authors, booksAuthors) => {
+export const getAuthors = (book, authors, authorBook) => {
     const authorIds = [];
-    booksAuthors.forEach(function (record) {
+    authorBook.forEach(function (record) {
         if (record.book === book.id) {
             authorIds.push(record.author);
         }
@@ -24,10 +24,10 @@ export const getAuthors = (book, authors, booksAuthors) => {
     return authorObjects;
 };
 
-export const getSeries = (book, series, booksSeries) => {
+export const getSeries = (book, series, seriesBook) => {
     let bookSeriesId;
     let bookSeries;
-    booksSeries.forEach(function (record) {
+    seriesBook.forEach(function (record) {
         if (record.book === book.id) {
             bookSeriesId = record.series;
         }
