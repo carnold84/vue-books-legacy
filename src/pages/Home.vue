@@ -84,6 +84,7 @@ export default {
                     books.push(book);
                 }
             });
+            console.log(books)
 
             return books;
         },

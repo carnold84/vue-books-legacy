@@ -1,6 +1,6 @@
 import uuid from 'uuid/v4';
 
-localStorage.removeItem('vue-books');
+// localStorage.removeItem('vue-books');
 let state = localStorage.getItem('vue-books');
 
 if (state === null) {
@@ -99,8 +99,13 @@ export default {
             seriesId: data.seriesId,
             bookNumber: data.bookNumber,
         };
+        let idx = state.books.allIds.indexOf(book.id);
+        if (idx > -1) {
+            state.books.allIds[idx] = book.id;
+        } else {
+            state.books.allIds.push(book.id);
+        }
         state.books.byId[book.id] = book;
-        state.books.allIds.push(book.id);
 
         this.linkAuthors(book.id, data.authors);
 
@@ -131,7 +136,14 @@ export default {
 
         callback(response);
     },
+    unlinkAuthors (bookId) {
+        state.authorBook = state.authorBook.filter(record => {
+            return record.bookId !== bookId;
+        });
+    },
     linkAuthors (bookId, authors) {
+        // remove existing links first
+        this.unlinkAuthors(bookId);
         authors.forEach(authorId => {
             state.authorBook.push({
                 id: uuid(),
@@ -143,7 +155,7 @@ export default {
     addAuthor (data, callback) {
         let author = createAuthor(data);
         state.authors.byId[author.id] = author;
-        state.books.allIds.push(author.id);
+        state.authors.allIds.push(author.id);
 
         updateStorage(state);
 

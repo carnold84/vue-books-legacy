@@ -1,7 +1,7 @@
 <template>
     <div class="multi-select-container">
         <multiselect
-            v-model="selected"
+            :value="value"
             :options="options"
             :customLabel="label"
             :hideSelected="true"
@@ -21,14 +21,15 @@ export default {
         Multiselect,
     },
     data () {
+        console.log(this.data)
         return {
-            selected: null,
-            options: this.items,
+            value: this.data.values,
+            options: this.data.options,
         };
     },
     props: {
-        items: {
-            type: Array,
+        data: {
+            type: Object,
             required: true,
         },
         onChange: {

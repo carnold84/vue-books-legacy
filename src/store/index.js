@@ -45,6 +45,15 @@ const store = {
             this.state = response.data;
         });
     },
+    addAuthor (data) {
+        if (this.debug) {
+            console.info('addAuthor triggered with', data);
+        }
+
+        api.addAuthor(data, response => {
+            this.state = response.data;
+        });
+    },
     updateState (state) {
         if (this.debug) {
             console.info('updateState triggered with', state);

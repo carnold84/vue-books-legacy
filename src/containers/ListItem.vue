@@ -29,15 +29,20 @@ export default {
             return this.book.authors.map(author => {
                 return {
                     ...author,
+                    label: `${author.lastName}, ${author.firstName}`,
                     url: `/author/${author.id}`,
                 };
             });
         },
         series () {
-            return {
-                ...this.book.series,
-                url: `/series/${this.book.series.id}`,
-            };
+            let series = null;
+            if (this.book.series) {
+                series = {
+                    ...this.book.series,
+                    url: `/series/${this.book.series.id}`,
+                };
+            }
+            return series;
         },
     },
 };

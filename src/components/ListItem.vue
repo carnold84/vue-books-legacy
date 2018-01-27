@@ -6,8 +6,8 @@
             <!-- </router-link> -->
         </div>
         <div class="cell">
-            <router-link v-if="authors" v-for="author in authors" :key="author.id" :to="author.url">
-                <span class="title-text">{{`${author.lastName}, ${author.firstName}`}}</span>
+            <router-link v-if="authors" v-for="author in authors" :key="author.id" :to="author.url" :title="author.label">
+                <span class="title-text">{{author.label}}</span>
             </router-link>
         </div>
         <div class="cell">
@@ -63,20 +63,32 @@ export default {
 }
 .list-item a {
     height: 100%;
+    margin: 0 10px 0 0;
+    white-space: nowrap;
+    overflow: hidden;
     flex-grow: 1;
     align-items: center;
     display: flex;
+}
+.list-item a:last-child {
+    margin: 0;
 }
 .list-item .title-text {
     border-bottom-style: dotted;
     border-bottom-width: 1px;
     border-bottom-color: #1e70ce;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .list-item a:hover .title-text {
     border-bottom-color: #e98400;
 }
 .cell {
     height: 100%;
+    padding: 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
     align-items: center;
     display: flex;
 }
@@ -84,10 +96,10 @@ export default {
     flex-grow: 1;
 }
 .cell:nth-child(2) {
-    flex-basis: 25%;
+    flex-basis: 30%;
 }
 .cell:nth-child(3) {
-    flex-basis: 25%;
+    flex-basis: 20%;
 }
 .cell:nth-child(4) {
     flex-basis: 10%;

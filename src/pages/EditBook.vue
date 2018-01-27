@@ -13,7 +13,7 @@
                 </div>
                 <div class="anim-section authors">
                     <multi-select
-                        :items="authorsData.options"
+                        :data="authorsData"
                         placeholder="Select Authors..."
                         :onChange="onAuthorsChange"
                         :multiple="true" />
@@ -22,7 +22,7 @@
                     </round-link-button>
                 </div>
                 <div class="anim-section series">
-                    <multi-select :items="seriesData.options" placeholder="Select Series..." :onChange="onSeriesChange" />
+                    <multi-select :data="seriesData" placeholder="Select Series..." :onChange="onSeriesChange" />
                     <round-link-button class="add-btn" to="/add-series">
                         <svgicon name="add" width="20" height="20"></svgicon>
                     </round-link-button>
@@ -76,27 +76,56 @@ export default {
             return book !== undefined ? book : {};
         },
         authorsData () {
+            let options = [];
+            let bookAuthors = [];
+            let values = [];
+
+            if (this.book !== undefined) {
+                this.authorBook.forEach(record => {
+                    if (this.book.id === record.bookId) {
+                        bookAuthors.push(record.authorId);
+                    }
+                });
+            }
+            
+            this.authors.allIds.forEach(authorId => {
+                const author = this.authors.byId[authorId];
+                const authorData =  {
+                    ...author,
+                    label: `${author.lastName}, ${author.firstName}`,
+                };
+                options.push(authorData);
+                if (bookAuthors.includes(authorId)) {
+                    values.push(authorData);
+                }
+            });
+            this.bookAuthors = values;
+
             return {
-                value: this.book ? this.book.authors : null,
-                options: this.authors.allIds.map(authorId => {
-                    const author = this.authors.byId[authorId];
-                    return {
-                        ...author,
-                        label: `${author.lastName}, ${author.firstName}`,
-                    };
-                }),
+                values,
+                options,
             };
         },
         seriesData () {
+            let options = [];
+            let values = null;
+
+            this.series.allIds.forEach(seriesId => {
+                const series = this.series.byId[seriesId];
+                const seriesData = {
+                    ...series,
+                    label: series.title,
+                };
+                options.push(seriesData);
+                if (seriesId === this.book.seriesId) {
+                    values = seriesData;
+                }
+            });
+            this.bookSeries = values;
+
             return {
-                value: this.book ? this.book.series : null,
-                options: this.series.allIds.map(seriesId => {
-                    const series = this.series.byId[seriesId];
-                    return {
-                        ...series,
-                        label: series.title,
-                    };
-                }),
+                values,
+                options,
             };
         },
     },
@@ -105,12 +134,7 @@ export default {
             let book;
 
             if (this.$route.params.id) {
-                const data = this.books.byId[this.$route.params.id];
-                book = {
-                    id: data.id,
-                    title: data.title,
-                    bookNumber: data.bookNumber,
-                };
+                book = this.books.byId[this.$route.params.id];
             }
 
             return book;
@@ -127,6 +151,7 @@ export default {
             data.authors = this.bookAuthors.map(author => {
                 return author.id;
             });
+            console.log('this.bookSeries', this.bookSeries)
             data.seriesId = this.bookSeries ? this.bookSeries.id : undefined;
             store.addBook(data);
             this.$router.go(-1);
