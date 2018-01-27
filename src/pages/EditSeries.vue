@@ -1,21 +1,18 @@
 <template>
-    <div id="edit-author">
+    <div id="edit-series">
         <header-bar>
-            <div class="header-content">
+            <div class="content-left">
                 <router-link to="/">Vue Books</router-link>
-                <h2>/ Add Author</h2>
+                <h2>/ Add Series</h2>
             </div>
         </header-bar>
         <div class="content">
             <form v-on:submit.prevent="onSubmit">
                 <div class="anim-section">
-                    <text-field label="First Name" name="firstName" :value="author.firstName" />
-                </div>
-                <div class="anim-section">
-                    <text-field label="Last Name" name="lastName" :value="author.lastName" />
+                    <text-field label="Title" name="title" :value="seriesData.title" />
                 </div>
                 <div class="buttons anim-section">
-                    <ui-button :isPrimary="true" :height="32">Save Author</ui-button>
+                    <ui-button :isPrimary="true" :height="32">{{submitLabel}}</ui-button>
                 </div>
             </form>
         </div>
@@ -30,7 +27,7 @@ import TextField from '@/components/TextField';
 import UiButton from '@/components/UiButton';
 
 export default {
-    name: 'EditAuthor',
+    name: 'EditSeries',
     components: {
         HeaderBar,
         TextField,
@@ -44,25 +41,30 @@ export default {
         els.forEach((el, i) => {
             el.style.transitionDelay = `${i * 30}ms`;
         });
-        const wrapper = document.querySelector('#edit-author');
+        const wrapper = document.querySelector('#edit-series');
         wrapper.classList.add('show');
     },
     computed: {
-        author () {
-            let author = {};
-
+        submitLabel () {
             if (this.$route.params.id) {
-                author = this.authorById[this.$route.params.id];
+                return 'Save Changes';
+            } else {
+                return 'Create Series';
             }
-
-            return author;
+        },
+        seriesData () {
+            if (this.$route.params.id) {
+                return this.series.byId[this.$route.params.id];
+            } else {
+                return {};
+            }
         },
     },
     methods: {
         onSubmit (evt) {
             const data = serialize(evt.target, { hash: true });
             data.id = this.$route.params.id;
-            store.addAuthor(data);
+            store.addSeries(data);
             this.$router.go(-1);
         },
     },
@@ -71,7 +73,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-#edit-author {
+#edit-series {
     align-items: center;
     flex-direction: column;
     display: flex;
@@ -87,43 +89,5 @@ export default {
     width: 100%;
     justify-content: flex-end;
     display: flex;
-}
-.button {
-    padding: 8px 25px;
-    color: #ffffff;
-    background-color: #1e70ce;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-
-    &:hover {
-        background-color: #3282df;
-    }
-}
-.header-content {
-    align-items: center;
-    display: flex;
-
-    h2 {
-        font-size: 1em;
-        font-weight: normal;
-        margin: 0;
-    }
-
-    a {
-        border-bottom: #ffffff dotted 1px;
-        margin: 1px 5px 0 0;
-    }
-
-    a:hover {
-        color: #e98400;
-        border-bottom: #e98400 dotted 1px;
-        margin: 1px 5px 0 0;
-    }
-}
-.multi-select {
-    position: relative;
-    margin: 0 0 20px;
-    z-index: 10;
 }
 </style>

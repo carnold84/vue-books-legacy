@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from '@/pages/Home';
 import EditBook from '@/pages/EditBook';
 import EditAuthor from '@/pages/EditAuthor';
+import EditSeries from '@/pages/EditSeries';
 
 Vue.use(Router);
 
@@ -39,6 +40,11 @@ export default new Router({
             path: '/add-author',
             name: 'AddAuthor',
             component: EditAuthor,
+        },
+        {
+            path: '/add-series',
+            name: 'AddSeries',
+            component: EditSeries,
         },
     ],
 });

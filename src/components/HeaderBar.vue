@@ -30,5 +30,27 @@ export default {
     a {
         color: #ffffff;
     }
+
+    .content-left {
+        align-items: center;
+        display: flex;
+
+        h2 {
+            font-size: 1em;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        a {
+            border-bottom: #ffffff dotted 1px;
+            margin: 1px 5px 0 0;
+        }
+
+        a:hover {
+            color: #e98400;
+            border-bottom: #e98400 dotted 1px;
+            margin: 1px 5px 0 0;
+        }
+    }
 }
 </style>

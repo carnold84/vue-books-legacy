@@ -154,8 +154,13 @@ export default {
     },
     addAuthor (data, callback) {
         let author = createAuthor(data);
+        let idx = state.authors.allIds.indexOf(author.id);
+        if (idx > -1) {
+            state.authors.allIds[idx] = author.id;
+        } else {
+            state.authors.allIds.push(author.id);
+        }
         state.authors.byId[author.id] = author;
-        state.authors.allIds.push(author.id);
 
         updateStorage(state);
 
@@ -186,8 +191,13 @@ export default {
     },
     addSeries (data, callback) {
         let series = createSeries(data);
-        state.authors.byId[series.id] = series;
-        state.books.allIds.push(series.id);
+        let idx = state.series.allIds.indexOf(series.id);
+        if (idx > -1) {
+            state.series.allIds[idx] = series.id;
+        } else {
+            state.series.allIds.push(series.id);
+        }
+        state.series.byId[series.id] = series;
 
         updateStorage(state);
 
@@ -221,7 +231,7 @@ const updateStorage = state => {
 
 const createAuthor = data => {
     let author = {
-        id: uuid(),
+        id: data.id ? data.id : uuid(),
     };
     if (data.firstName) {
         author.firstName = data.firstName;
@@ -233,8 +243,11 @@ const createAuthor = data => {
 };
 
 const createSeries = data => {
-    return {
-        id: uuid(),
-        title: data.series,
+    let series = {
+        id: data.id ? data.id : uuid(),
     };
+    if (data.title) {
+        series.title = data.title;
+    }
+    return series;
 };

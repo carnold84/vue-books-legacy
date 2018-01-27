@@ -1,7 +1,7 @@
 <template>
     <div id="edit-author">
         <header-bar>
-            <div class="header-content">
+            <div class="content-left">
                 <router-link to="/">Vue Books</router-link>
                 <h2>/ Add Author</h2>
             </div>
@@ -9,13 +9,13 @@
         <div class="content">
             <form v-on:submit.prevent="onSubmit">
                 <div class="anim-section">
-                    <text-field label="First Name" name="firstName" :value="author.firstName" />
+                    <text-field label="First Name" name="firstName" :value="authorData.firstName" />
                 </div>
                 <div class="anim-section">
-                    <text-field label="Last Name" name="lastName" :value="author.lastName" />
+                    <text-field label="Last Name" name="lastName" :value="authorData.lastName" />
                 </div>
                 <div class="buttons anim-section">
-                    <ui-button :isPrimary="true" :height="32">Save Author</ui-button>
+                    <ui-button :isPrimary="true" :height="32">{{submitLabel}}</ui-button>
                 </div>
             </form>
         </div>
@@ -48,14 +48,19 @@ export default {
         wrapper.classList.add('show');
     },
     computed: {
-        author () {
-            let author = {};
-
+        submitLabel () {
             if (this.$route.params.id) {
-                author = this.authorById[this.$route.params.id];
+                return 'Save Changes';
+            } else {
+                return 'Create Author';
             }
-
-            return author;
+        },
+        authorData () {
+            if (this.$route.params.id) {
+                return this.authorById[this.$route.params.id];
+            } else {
+                return {};
+            }
         },
     },
     methods: {

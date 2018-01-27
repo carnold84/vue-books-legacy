@@ -54,6 +54,15 @@ const store = {
             this.state = response.data;
         });
     },
+    addSeries (data) {
+        if (this.debug) {
+            console.info('addSeries triggered with', data);
+        }
+
+        api.addSeries(data, response => {
+            this.state = response.data;
+        });
+    },
     updateState (state) {
         if (this.debug) {
             console.info('updateState triggered with', state);
