@@ -88,42 +88,4 @@ export default {
     justify-content: flex-end;
     display: flex;
 }
-.button {
-    padding: 8px 25px;
-    color: #ffffff;
-    background-color: #1e70ce;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-
-    &:hover {
-        background-color: #3282df;
-    }
-}
-.header-content {
-    align-items: center;
-    display: flex;
-
-    h2 {
-        font-size: 1em;
-        font-weight: normal;
-        margin: 0;
-    }
-
-    a {
-        border-bottom: #ffffff dotted 1px;
-        margin: 1px 5px 0 0;
-    }
-
-    a:hover {
-        color: #e98400;
-        border-bottom: #e98400 dotted 1px;
-        margin: 1px 5px 0 0;
-    }
-}
-.multi-select {
-    position: relative;
-    margin: 0 0 20px;
-    z-index: 10;
-}
 </style>

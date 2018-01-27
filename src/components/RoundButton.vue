@@ -47,7 +47,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 .round-button {
     width: 28px;
     height: 28px;
@@ -60,22 +60,23 @@ export default {
     justify-content: center;
     align-items: center;
     display: flex;
-}
-.round-button:hover {
-    color: #ffffff;
-    background-color: #1e70ce;
-    border: #1e70ce solid 1px;
-    box-shadow: rgba(0, 0, 0, 0.25) 0 1px 3px;
-}
-.round-button.is-primary {
-    color: rgba(255, 255, 255, 1);
-    border: #1e70ce solid 1px;
-    background-color: #1e70ce;
-    box-shadow: rgba(0, 0, 0, 0.35) 0 1px 2px;
-}
-.round-button.is-primary:hover {
-    border: #3489eb solid 1px;
-    background-color: #3489eb;
-    box-shadow: rgba(0, 0, 0, 0.55) 0 1px 4px;
+
+    &:hover {
+        color: #ffffff;
+        background-color: #1e70ce;
+        border: #1e70ce solid 1px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0 1px 3px;
+    }
+    &.is-primary {
+        color: rgba(255, 255, 255, 1);
+        border: #1e70ce solid 1px;
+        background-color: #1e70ce;
+        box-shadow: rgba(0, 0, 0, 0.35) 0 1px 2px;
+    }
+    &.is-primary:hover {
+        border: #3489eb solid 1px;
+        background-color: #3489eb;
+        box-shadow: rgba(0, 0, 0, 0.55) 0 1px 4px;
+    }
 }
 </style>

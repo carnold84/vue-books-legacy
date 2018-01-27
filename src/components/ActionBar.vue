@@ -15,7 +15,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 .action-bar {
     width: 100%;
     height: 40px;
@@ -25,8 +25,9 @@ export default {
     align-items: center;
     flex-direction: row;
     display: flex;
-}
-.action-bar.has-border {
-    border-bottom: #dddddd solid 1px;
+
+    &.has-border {
+        border-bottom: #dddddd solid 1px;
+    }
 }
 </style>

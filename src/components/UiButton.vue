@@ -65,7 +65,6 @@ export default {
         color: rgba(0, 0, 0, 0.8);
         box-shadow: rgba(0, 0, 0, 0.25) 0 1px 3px;
     }
-
     &.is-primary {
         color: rgba(255, 255, 255, 1);
         border: #1e70ce solid 1px;
