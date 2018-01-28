@@ -35,7 +35,7 @@ export default {
         align-items: center;
         display: flex;
 
-        h2 {
+        h1, h2 {
             font-size: 1em;
             font-weight: normal;
             margin: 0;

@@ -1,7 +1,9 @@
 <template>
     <div id="home">
         <header-bar>
-            <h1>Vue Books</h1>
+            <div class="content-left">
+                <h1>Vue Books</h1>
+            </div>
         </header-bar>
         <div class="content">
             <action-bar :hasBorder="sortedBooks.length === 0">
@@ -84,7 +86,6 @@ export default {
                     books.push(book);
                 }
             });
-            console.log(books)
 
             return books;
         },

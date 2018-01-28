@@ -21,7 +21,6 @@ export default {
         Multiselect,
     },
     data () {
-        console.log(this.data)
         return {
             value: this.data.values,
             options: this.data.options,

@@ -87,10 +87,9 @@ export default {
                     }
                 });
             }
-            
             this.authors.allIds.forEach(authorId => {
                 const author = this.authors.byId[authorId];
-                const authorData =  {
+                const authorData = {
                     ...author,
                     label: `${author.lastName}, ${author.firstName}`,
                 };
@@ -151,7 +150,6 @@ export default {
             data.authors = this.bookAuthors.map(author => {
                 return author.id;
             });
-            console.log('this.bookSeries', this.bookSeries)
             data.seriesId = this.bookSeries ? this.bookSeries.id : undefined;
             store.addBook(data);
             this.$router.go(-1);
