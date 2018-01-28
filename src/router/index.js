@@ -9,7 +9,7 @@ Vue.use(Router);
 
 export default new Router({
     mode: 'hash',
-    base: window.location.pathname,
+    base: '/demo/',
     routes: [
         {
             path: '/',
