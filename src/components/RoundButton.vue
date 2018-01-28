@@ -2,13 +2,13 @@
     <button 
         v-if="isButton"
         v-on:click="onClick ? onClick() : ''"
-        :class="{'ui-button': true, 'is-primary': isPrimary }"
+        :class="{'round-button': true, 'is-primary': isPrimary }"
         :style="style">
         <slot></slot>
     </button>
     <div
         v-else
-        :class="{'ui-button': true, 'is-primary': isPrimary }"
+        :class="{'round-button': true, 'is-primary': isPrimary }"
         :style="style"
         v-on:click="onClick ? onClick() : ''">
         <slot></slot>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-    name: 'UiButton',
+    name: 'RoundButton',
     props: {
         isButton: {
             type: Boolean,
@@ -48,21 +48,23 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.ui-button {
-    font-size: 14px;
-    line-height: 17px;
+.round-button {
+    width: 28px;
+    height: 28px;
     color: rgba(0, 0, 0, 0.65);
-    padding: 0 12px;
     border: #dddddd solid 1px;
     background-color: #ffffff;
-    border-radius: 3px;
+    border-radius: 14px;
     box-shadow: rgba(0, 0, 0, 0.15) 0 1px 1px;
     cursor: pointer;
+    justify-content: center;
     align-items: center;
     display: flex;
 
     &:hover {
-        color: rgba(0, 0, 0, 0.8);
+        color: #ffffff;
+        background-color: #1e70ce;
+        border: #1e70ce solid 1px;
         box-shadow: rgba(0, 0, 0, 0.25) 0 1px 3px;
     }
     &.is-primary {
@@ -70,12 +72,11 @@ export default {
         border: #1e70ce solid 1px;
         background-color: #1e70ce;
         box-shadow: rgba(0, 0, 0, 0.35) 0 1px 2px;
-
-        &:hover {
-            border: #3489eb solid 1px;
-            background-color: #3489eb;
-            box-shadow: rgba(0, 0, 0, 0.55) 0 1px 4px;
-        }
+    }
+    &.is-primary:hover {
+        border: #3489eb solid 1px;
+        background-color: #3489eb;
+        box-shadow: rgba(0, 0, 0, 0.55) 0 1px 4px;
     }
 }
 </style>

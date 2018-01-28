@@ -11,10 +11,10 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 .header-bar {
     width: 100%;
-    height: 40px;
+    height: 50px;
     font-size: 1em;
     color: #ffffff;
     margin: 0;
@@ -26,8 +26,31 @@ export default {
     align-items: center;
     flex-direction: row;
     display: flex;
-}
-.header-bar a {
-    color: #ffffff;
+
+    a {
+        color: #ffffff;
+    }
+
+    .content-left {
+        align-items: center;
+        display: flex;
+
+        h1, h2 {
+            font-size: 1em;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        a {
+            border-bottom: #ffffff dotted 1px;
+            margin: 1px 5px 0 0;
+        }
+
+        a:hover {
+            color: #e98400;
+            border-bottom: #e98400 dotted 1px;
+            margin: 1px 5px 0 0;
+        }
+    }
 }
 </style>
