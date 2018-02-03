@@ -1,49 +1,26 @@
 <template>
     <div class="list-item">
         <div class="cell">
-            <!-- <router-link :to="url"> -->
-                <span>{{title}}</span>
-            <!-- </router-link> -->
+            <slot name="cell1"></slot>
         </div>
         <div class="cell">
-            <router-link v-if="authors" v-for="author in authors" :key="author.id" :to="author.url" :title="author.label">
-                <span class="title-text">{{author.label}}</span>
-            </router-link>
+            <slot name="cell2"></slot>
         </div>
         <div class="cell">
-            <router-link v-if="series" :to="series.url">
-                <span class="title-text">{{series.title}}</span>
-            </router-link>
+            <slot name="cell3"></slot>
         </div>
         <div class="cell">
-            <span v-if="bookNumber">{{`Book ${bookNumber}`}}</span>
+            <slot name="cell4"></slot>
         </div>
         <div class="actions">
-            <link-button :to="editUrl">Edit</link-button>
-            <ui-button :onClick="onRemove">Remove</ui-button>
+            <slot name="actions"></slot>
         </div>
     </div>
 </template>
 
 <script>
-import UiButton from '@/components/UiButton';
-import LinkButton from '@/components/LinkButton';
-
 export default {
     name: 'ListItem',
-    components: {
-        UiButton,
-        LinkButton,
-    },
-    props: {
-        title: String,
-        url: String,
-        editUrl: String,
-        authors: Array,
-        series: Object,
-        bookNumber: String,
-        onRemove: Function,
-    },
 };
 </script>
 
@@ -52,6 +29,7 @@ export default {
     height: 50px;
     padding: 0 10px;
     border-bottom: #dddddd solid 1px;
+    flex-shrink: 0;
     align-items: center;
     justify-content: flex-start;
     flex-direction: row;
@@ -81,28 +59,6 @@ export default {
     &:nth-child(4) {
         flex-basis: 10%;
     }
-    a {
-        height: 100%;
-        margin: 0 10px 0 0;
-        white-space: nowrap;
-        overflow: hidden;
-        align-items: center;
-        display: flex;
-    }
-    a:last-child {
-        margin: 0;
-    }
-    .title-text {
-        border-bottom-style: dotted;
-        border-bottom-width: 1px;
-        border-bottom-color: #1e70ce;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    a:hover .title-text {
-        border-bottom-color: #e98400;
-    }
 }
 .actions {
     padding: 0 0 0 10px;
@@ -115,5 +71,33 @@ export default {
 }
 .actions > :last-child {
     margin: 0;
+}
+</style>
+<style lang="scss">
+.list-item {
+    .cell {
+        a {
+            height: 100%;
+            margin: 0 10px 0 0;
+            white-space: nowrap;
+            overflow: hidden;
+            align-items: center;
+            display: flex;
+        }
+        a:last-child {
+            margin: 0;
+        }
+        .title-text {
+            border-bottom-style: dotted;
+            border-bottom-width: 1px;
+            border-bottom-color: #1e70ce;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        a:hover .title-text {
+            border-bottom-color: #e98400;
+        }
+    }
 }
 </style>

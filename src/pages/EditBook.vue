@@ -1,5 +1,5 @@
 <template>
-    <div id="edit-book">
+    <Page id="edit-book">
         <header-bar>
             <div class="header-content">
                 <router-link to="/">Vue Books</router-link>
@@ -9,7 +9,7 @@
         <div class="content">
             <form v-on:submit.prevent="onSubmit">
                 <div class="anim-section">
-                    <text-field label="Title" name="title" :value="book.title" />
+                    <text-field label="Title" name="title" :value="bookData.title" />
                 </div>
                 <div class="anim-section authors">
                     <multi-select
@@ -28,19 +28,20 @@
                     </round-link-button>
                 </div>
                 <div class="anim-section">
-                    <text-field label="Book Number" name="bookNumber" :value="book.bookNumber" />
+                    <text-field label="Book Number" name="bookNumber" :value="bookData.bookNumber" />
                 </div>
                 <div class="buttons anim-section">
                     <ui-button :isPrimary="true" :height="32">Save Book</ui-button>
                 </div>
             </form>
         </div>
-    </div>
+    </Page>
 </template>
 
 <script>
 import serialize from 'form-serialize';
 import store from '@/store';
+import Page from '@/components/Page';
 import HeaderBar from '@/components/HeaderBar';
 import TextField from '@/components/TextField';
 import UiButton from '@/components/UiButton';
@@ -52,6 +53,7 @@ import '@/compiled-icons/add';
 export default {
     name: 'EditBook',
     components: {
+        Page,
         HeaderBar,
         TextField,
         UiButton,
@@ -71,18 +73,21 @@ export default {
         wrapper.classList.add('show');
     },
     computed: {
-        book () {
-            let book = this.getBook();
-            return book !== undefined ? book : {};
+        bookData () {
+            if (this.$route.params.id) {
+                return this.books.byId[this.$route.params.id];
+            } else {
+                return {};
+            }
         },
         authorsData () {
             let options = [];
             let bookAuthors = [];
             let values = [];
 
-            if (this.book !== undefined) {
+            if (this.bookData !== undefined) {
                 this.authorBook.forEach(record => {
-                    if (this.book.id === record.bookId) {
+                    if (this.bookData.id === record.bookId) {
                         bookAuthors.push(record.authorId);
                     }
                 });
@@ -116,7 +121,7 @@ export default {
                     label: series.title,
                 };
                 options.push(seriesData);
-                if (seriesId === this.book.seriesId) {
+                if (seriesId === this.bookData.seriesId) {
                     values = seriesData;
                 }
             });
@@ -129,15 +134,6 @@ export default {
         },
     },
     methods: {
-        getBook () {
-            let book;
-
-            if (this.$route.params.id) {
-                book = this.books.byId[this.$route.params.id];
-            }
-
-            return book;
-        },
         onAuthorsChange (authors) {
             this.bookAuthors = authors;
         },

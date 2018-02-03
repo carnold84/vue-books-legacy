@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from '@/pages/Home';
+import Authors from '@/pages/Authors';
 import EditBook from '@/pages/EditBook';
 import EditAuthor from '@/pages/EditAuthor';
 import EditSeries from '@/pages/EditSeries';
@@ -18,13 +19,18 @@ export default new Router({
         },
         {
             path: '/author/:name',
-            name: 'Authors',
+            name: 'AuthorBooks',
             component: Home,
         },
         {
             path: '/series/:title',
-            name: 'Series',
+            name: 'SeriesBooks',
             component: Home,
+        },
+        {
+            path: '/authors',
+            name: 'Authors',
+            component: Authors,
         },
         {
             path: '/add-book',

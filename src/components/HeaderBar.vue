@@ -22,6 +22,7 @@ export default {
     background-color: #1e70ce;
     border-bottom: #1e70ce solid 1px;
     box-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
+    flex-shrink: 0;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;

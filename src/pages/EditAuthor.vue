@@ -1,5 +1,5 @@
 <template>
-    <div id="edit-author">
+    <Page id="edit-author">
         <header-bar>
             <div class="content-left">
                 <router-link to="/">Vue Books</router-link>
@@ -19,12 +19,13 @@
                 </div>
             </form>
         </div>
-    </div>
+    </Page>
 </template>
 
 <script>
 import serialize from 'form-serialize';
 import store from '@/store';
+import Page from '@/components/Page';
 import HeaderBar from '@/components/HeaderBar';
 import TextField from '@/components/TextField';
 import UiButton from '@/components/UiButton';
@@ -32,6 +33,7 @@ import UiButton from '@/components/UiButton';
 export default {
     name: 'EditAuthor',
     components: {
+        Page,
         HeaderBar,
         TextField,
         UiButton,
@@ -76,11 +78,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-#edit-author {
-    align-items: center;
-    flex-direction: column;
-    display: flex;
-}
 .content {
     max-width: 1080px;
     width: 100%;

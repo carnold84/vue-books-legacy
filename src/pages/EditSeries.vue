@@ -1,27 +1,30 @@
 <template>
-    <div id="edit-series">
-        <header-bar>
-            <div class="content-left">
-                <router-link to="/">Vue Books</router-link>
-                <h2>/ Add Series</h2>
+    <Page>
+        <div id="edit-series">
+            <header-bar>
+                <div class="content-left">
+                    <router-link to="/">Vue Books</router-link>
+                    <h2>/ Add Series</h2>
+                </div>
+            </header-bar>
+            <div class="content">
+                <form v-on:submit.prevent="onSubmit">
+                    <div class="anim-section">
+                        <text-field label="Title" name="title" :value="seriesData.title" />
+                    </div>
+                    <div class="buttons anim-section">
+                        <ui-button :isPrimary="true" :height="32">{{submitLabel}}</ui-button>
+                    </div>
+                </form>
             </div>
-        </header-bar>
-        <div class="content">
-            <form v-on:submit.prevent="onSubmit">
-                <div class="anim-section">
-                    <text-field label="Title" name="title" :value="seriesData.title" />
-                </div>
-                <div class="buttons anim-section">
-                    <ui-button :isPrimary="true" :height="32">{{submitLabel}}</ui-button>
-                </div>
-            </form>
         </div>
-    </div>
+    </Page>
 </template>
 
 <script>
 import serialize from 'form-serialize';
 import store from '@/store';
+import Page from '@/components/Page';
 import HeaderBar from '@/components/HeaderBar';
 import TextField from '@/components/TextField';
 import UiButton from '@/components/UiButton';
@@ -29,6 +32,7 @@ import UiButton from '@/components/UiButton';
 export default {
     name: 'EditSeries',
     components: {
+        Page,
         HeaderBar,
         TextField,
         UiButton,
