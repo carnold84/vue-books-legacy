@@ -1,7 +1,7 @@
 <template>
     <button 
         v-if="isButton"
-        v-on:click="onClick ? onClick() : ''"
+        v-on:click="click"
         :class="{'ui-button': true, 'is-primary': isPrimary }"
         :style="style">
         <slot></slot>
@@ -10,7 +10,7 @@
         v-else
         :class="{'ui-button': true, 'is-primary': isPrimary }"
         :style="style"
-        v-on:click="onClick ? onClick() : ''">
+        v-on:click="click">
         <slot></slot>
     </div>
 </template>
@@ -41,6 +41,13 @@ export default {
             return {
                 height: `${this.height}px`,
             };
+        },
+    },
+    methods: {
+        click (evt) {
+            if (this.onClick) {
+                this.onClick(evt);
+            }
         },
     },
 };

@@ -1,11 +1,9 @@
 <template>
-    <div id="home">
-        <header-bar>
-            <div class="content-left">
-                <h1>Vue Books</h1>
-            </div>
-        </header-bar>
-        <div class="content">
+    <Page id="home">
+        <template slot="header-left">
+            <router-link to="/">Vue Books</router-link>
+        </template>
+        <template slot="content">
             <action-bar :hasBorder="sortedBooks.length === 0">
                 <div class="action-bar-content">
                     <h2>Books</h2>
@@ -16,26 +14,27 @@
                     </round-link-button>
                 </div>
             </action-bar>
-            <list v-if="sortedBooks.length > 0">
-                <list-item-container v-for="book in sortedBooks" :key="book.id" :book="book" :onRemove="onRemove" />
-            </list>
+            <ui-list v-if="sortedBooks.length > 0">
+                <book-item v-for="book in sortedBooks" :key="book.id" :book="book" :onRemove="onRemove" />
+            </ui-list>
             <content-message v-if="sortedBooks.length === 0">
                 <p>You don't have any books yet.</p>
                 <link-button to="/add-book">Add One</link-button>
             </content-message>
-        </div>
-    </div>
+        </template>
+    </Page>
 </template>
 
 <script>
 import store from '@/store';
+import Page from '@/components/Page';
 import HeaderBar from '@/components/HeaderBar';
 import ActionBar from '@/components/ActionBar';
 import ContentMessage from '@/components/ContentMessage';
 import LinkButton from '@/components/LinkButton';
 import RoundLinkButton from '@/components/RoundLinkButton';
-import List from '@/components/List';
-import ListItemContainer from '@/containers/ListItem';
+import UiList from '@/components/UiList';
+import BookItem from '@/containers/BookItem';
 import '@/compiled-icons/add';
 
 export default {
@@ -44,21 +43,22 @@ export default {
         return store.state;
     },
     components: {
+        Page,
         HeaderBar,
         ActionBar,
         ContentMessage,
-        List,
-        ListItemContainer,
         LinkButton,
         RoundLinkButton,
+        UiList,
+        BookItem,
     },
     computed: {
         sortedBooks () {
             let authorId;
             let seriesId;
-            if (this.$route.name === 'Authors') {
+            if (this.$route.name === 'AuthorBooks') {
                 authorId = this.$route.params.name;
-            } else if (this.$route.name === 'Series') {
+            } else if (this.$route.name === 'SeriesBooks') {
                 seriesId = this.$route.params.title;
             }
             let books = [];

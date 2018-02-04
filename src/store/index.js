@@ -54,12 +54,30 @@ const store = {
             this.state = response.data;
         });
     },
+    removeAuthor (id) {
+        if (this.debug) {
+            console.info('removeAuthor triggered with', id);
+        }
+
+        api.removeAuthor(id, response => {
+            this.state = response.data;
+        });
+    },
     addSeries (data) {
         if (this.debug) {
             console.info('addSeries triggered with', data);
         }
 
         api.addSeries(data, response => {
+            this.state = response.data;
+        });
+    },
+    removeSeries (id) {
+        if (this.debug) {
+            console.info('removeSeries triggered with', id);
+        }
+
+        api.removeSeries(id, response => {
             this.state = response.data;
         });
     },

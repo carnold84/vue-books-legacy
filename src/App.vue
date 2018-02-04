@@ -47,11 +47,24 @@ button {
     stroke: none;
 }
 #app {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
     font-size: 15px;
     color: rgba(0, 0, 0, 0.8);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+}
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #ffffff;
+    flex-direction: column;
+    display: flex;
 }
 .anim-section {
     opacity: 0;
