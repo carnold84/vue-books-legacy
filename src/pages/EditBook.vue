@@ -1,12 +1,10 @@
 <template>
     <Page id="edit-book">
-        <header-bar>
-            <div class="header-content">
-                <router-link to="/">Vue Books</router-link>
-                <h2>/ Add Book</h2>
-            </div>
-        </header-bar>
-        <div class="content">
+        <template slot="header-left">
+            <router-link to="/">Vue Books</router-link>
+            <h2>/ Add Book</h2>
+        </template>
+        <template slot="content">
             <form v-on:submit.prevent="onSubmit">
                 <div class="anim-section">
                     <text-field label="Title" name="title" :value="bookData.title" />
@@ -31,10 +29,11 @@
                     <text-field label="Book Number" name="bookNumber" :value="bookData.bookNumber" />
                 </div>
                 <div class="buttons anim-section">
-                    <ui-button :isPrimary="true" :height="32">Save Book</ui-button>
+                    <ui-button :height="32" :onClick="onCancel">Cancel</ui-button>
+                    <ui-button :isPrimary="true" :isSubmit="true" :height="32">Save Book</ui-button>
                 </div>
             </form>
-        </div>
+        </template>
     </Page>
 </template>
 
@@ -42,7 +41,6 @@
 import serialize from 'form-serialize';
 import store from '@/store';
 import Page from '@/components/Page';
-import HeaderBar from '@/components/HeaderBar';
 import TextField from '@/components/TextField';
 import UiButton from '@/components/UiButton';
 import MultiSelect from '@/components/MultiSelect';
@@ -54,7 +52,6 @@ export default {
     name: 'EditBook',
     components: {
         Page,
-        HeaderBar,
         TextField,
         UiButton,
         MultiSelect,
@@ -140,6 +137,10 @@ export default {
         onSeriesChange (series) {
             this.bookSeries = series;
         },
+        onCancel (evt) {
+            evt.preventDefault();
+            this.$router.go(-1);
+        },
         onSubmit (evt) {
             const data = serialize(evt.target, { hash: true });
             data.id = this.$route.params.id;
@@ -155,41 +156,19 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-#edit-book {
-    align-items: center;
-    flex-direction: column;
-    display: flex;
-}
-.content {
-    max-width: 1080px;
-    width: 100%;
-    padding: 40px 40px 0;
-    flex-direction: column;
-    display: flex;
-}
+<style lang="scss" scoped>
 .buttons {
     width: 100%;
     justify-content: flex-end;
     display: flex;
-}
-.header-content {
-    align-items: center;
-    display: flex;
-}
-.header-content h2 {
-    font-size: 1em;
-    font-weight: normal;
-    margin: 0;
-}
-.header-content a {
-    border-bottom: #ffffff dotted 1px;
-    margin: 1px 5px 0 0;
-}
-.header-content a:hover {
-    color: #e98400;
-    border-bottom: #e98400 dotted 1px;
-    margin: 1px 5px 0 0;
+
+    > * {
+        margin: 0 10px 0 0;
+
+        &:last-child {
+            margin: 0;
+        }
+    }
 }
 .authors {
     position: relative;

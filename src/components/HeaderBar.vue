@@ -1,7 +1,12 @@
 <template>
-    <div class="header-bar">
-        <slot></slot>
-    </div>
+    <header class="header-bar">
+        <div class="content-left">
+            <slot name="content-left"></slot>
+        </div>
+        <div class="content-right">
+            <slot name="content-right"></slot>
+        </div>
+    </header>
 </template>
 
 <script>
@@ -32,7 +37,7 @@ export default {
         color: #ffffff;
     }
 
-    .content-left {
+    .content-left, .content-right {
         align-items: center;
         display: flex;
 

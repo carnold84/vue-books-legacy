@@ -1,23 +1,20 @@
 <template>
-    <Page>
-        <div id="edit-series">
-            <header-bar>
-                <div class="content-left">
-                    <router-link to="/">Vue Books</router-link>
-                    <h2>/ Add Series</h2>
+    <Page id="edit-series">
+        <template slot="header-left">
+            <router-link to="/">Vue Books</router-link>
+            <h2>/ Add Series</h2>
+        </template>
+        <template slot="content">
+            <form v-on:submit.prevent="onSubmit">
+                <div class="anim-section">
+                    <text-field label="Title" name="title" :value="seriesData.title" />
                 </div>
-            </header-bar>
-            <div class="content">
-                <form v-on:submit.prevent="onSubmit">
-                    <div class="anim-section">
-                        <text-field label="Title" name="title" :value="seriesData.title" />
-                    </div>
-                    <div class="buttons anim-section">
-                        <ui-button :isPrimary="true" :height="32">{{submitLabel}}</ui-button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                <div class="buttons anim-section">
+                    <ui-button :height="32" :onClick="onCancel">Cancel</ui-button>
+                    <ui-button :isPrimary="true" :isSubmit="true" :height="32">{{submitLabel}}</ui-button>
+                </div>
+            </form>
+        </template>
     </Page>
 </template>
 
@@ -65,6 +62,10 @@ export default {
         },
     },
     methods: {
+        onCancel (evt) {
+            evt.preventDefault();
+            this.$router.go(-1);
+        },
         onSubmit (evt) {
             const data = serialize(evt.target, { hash: true });
             data.id = this.$route.params.id;
@@ -77,11 +78,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-#edit-series {
-    align-items: center;
-    flex-direction: column;
-    display: flex;
-}
 .content {
     max-width: 1080px;
     width: 100%;
@@ -93,5 +89,13 @@ export default {
     width: 100%;
     justify-content: flex-end;
     display: flex;
+
+    > * {
+        margin: 0 10px 0 0;
+
+        &:last-child {
+            margin: 0;
+        }
+    }
 }
 </style>

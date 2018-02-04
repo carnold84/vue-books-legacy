@@ -1,26 +1,26 @@
 <template>
-    <Page id="authors">
+    <Page id="series">
         <template slot="header-left">
             <router-link to="/">Vue Books</router-link>
-            <h2>/ Authors</h2>
+            <h2>/ Series</h2>
         </template>
         <template slot="content">
-            <action-bar :hasBorder="sortedAuthors.length === 0">
+            <action-bar :hasBorder="sortedSeries.length === 0">
                 <div class="action-bar-content">
-                    <h2>Authors</h2>
+                    <h2>Series</h2>
                 </div>
                 <div class="action-bar-actions">
-                    <round-link-button to="/add-author">
+                    <round-link-button to="/add-series">
                         <svgicon name="add" width="20" height="20"></svgicon>
                     </round-link-button>
                 </div>
             </action-bar>
-            <ui-list v-if="sortedAuthors.length > 0">
-                <author-item v-for="author in sortedAuthors" :key="author.id" :author="author" :onRemove="onRemove" />
+            <ui-list v-if="sortedSeries.length > 0">
+                <series-item v-for="series in sortedSeries" :key="series.id" :series="series" :onRemove="onRemove" />
             </ui-list>
-            <content-message v-if="sortedAuthors.length === 0">
-                <p>You don't have any authors yet.</p>
-                <link-button to="/add-author">Add One</link-button>
+            <content-message v-if="sortedSeries.length === 0">
+                <p>You don't have any series yet.</p>
+                <link-button to="/add-series">Add One</link-button>
             </content-message>
         </template>
     </Page>
@@ -29,47 +29,49 @@
 <script>
 import store from '@/store';
 import Page from '@/components/Page';
+import HeaderBar from '@/components/HeaderBar';
 import ActionBar from '@/components/ActionBar';
 import ContentMessage from '@/components/ContentMessage';
 import LinkButton from '@/components/LinkButton';
 import RoundLinkButton from '@/components/RoundLinkButton';
 import UiList from '@/components/UiList';
-import AuthorItem from '@/containers/AuthorItem';
+import SeriesItem from '@/containers/SeriesItem';
 import '@/compiled-icons/add';
 
 export default {
-    name: 'Authors',
+    name: 'Series',
     data () {
         return store.state;
     },
     components: {
         Page,
+        HeaderBar,
         ActionBar,
         ContentMessage,
         UiList,
         LinkButton,
         RoundLinkButton,
-        AuthorItem,
+        SeriesItem,
     },
     computed: {
-        sortedAuthors () {
-            let authors = [];
-            this.authors.allIds.forEach(authorId => {
-                const data = this.authors.byId[authorId];
-                let author = {
+        sortedSeries () {
+            let seriesData = [];
+            this.series.allIds.forEach(seriesId => {
+                const data = this.series.byId[seriesId];
+                let series = {
                     ...data,
-                    url: `/author/${authorId}`,
-                    editUrl: `/edit-author/${authorId}`,
+                    url: `/series/${seriesId}`,
+                    editUrl: `/edit-series/${seriesId}`,
                 };
-                authors.push(author);
+                seriesData.push(series);
             });
 
-            return authors;
+            return seriesData;
         },
     },
     methods: {
         onRemove (id) {
-            store.removeAuthor(id);
+            store.removeSeries(id);
         },
     },
 };

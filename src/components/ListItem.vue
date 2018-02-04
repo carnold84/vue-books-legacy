@@ -28,7 +28,7 @@ export default {
 .list-item {
     height: 50px;
     padding: 0 10px;
-    border-bottom: #dddddd solid 1px;
+    border-bottom: #eeeeee solid 1px;
     flex-shrink: 0;
     align-items: center;
     justify-content: flex-start;
@@ -36,7 +36,7 @@ export default {
     display: flex;
 
     &:first-child {
-        border-top: #dddddd solid 1px;
+        border-top: #eeeeee solid 1px;
     }
 }
 .cell {
@@ -57,7 +57,7 @@ export default {
         flex-basis: 20%;
     }
     &:nth-child(4) {
-        flex-basis: 10%;
+        flex-basis: 15%;
     }
 }
 .actions {

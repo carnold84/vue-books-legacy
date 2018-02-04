@@ -1,18 +1,9 @@
 <template>
     <Page id="home">
-        <header-bar>
-            <div class="content-left">
-                <h1>
-                    <router-link to="/">Vue Books</router-link>
-                </h1>
-            </div>
-            <div class="content-right">
-                <nav>
-                    <router-link to="/authors">Authors</router-link>
-                </nav>
-            </div>
-        </header-bar>
-        <div class="content">
+        <template slot="header-left">
+            <router-link to="/">Vue Books</router-link>
+        </template>
+        <template slot="content">
             <action-bar :hasBorder="sortedBooks.length === 0">
                 <div class="action-bar-content">
                     <h2>Books</h2>
@@ -30,7 +21,7 @@
                 <p>You don't have any books yet.</p>
                 <link-button to="/add-book">Add One</link-button>
             </content-message>
-        </div>
+        </template>
     </Page>
 </template>
 

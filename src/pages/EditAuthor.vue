@@ -1,12 +1,10 @@
 <template>
     <Page id="edit-author">
-        <header-bar>
-            <div class="content-left">
-                <router-link to="/">Vue Books</router-link>
-                <h2>/ Add Author</h2>
-            </div>
-        </header-bar>
-        <div class="content">
+        <template slot="header-left">
+            <router-link to="/">Vue Books</router-link>
+            <h2>/ Add Author</h2>
+        </template>
+        <template slot="content">
             <form v-on:submit.prevent="onSubmit">
                 <div class="anim-section">
                     <text-field label="First Name" name="firstName" :value="authorData.firstName" />
@@ -15,10 +13,11 @@
                     <text-field label="Last Name" name="lastName" :value="authorData.lastName" />
                 </div>
                 <div class="buttons anim-section">
+                    <ui-button :height="32" :onClick="onCancel">Cancel</ui-button>
                     <ui-button :isPrimary="true" :height="32">{{submitLabel}}</ui-button>
                 </div>
             </form>
-        </div>
+        </template>
     </Page>
 </template>
 
@@ -59,13 +58,17 @@ export default {
         },
         authorData () {
             if (this.$route.params.id) {
-                return this.authorById[this.$route.params.id];
+                return this.authors.byId[this.$route.params.id];
             } else {
                 return {};
             }
         },
     },
     methods: {
+        onCancel (evt) {
+            evt.preventDefault();
+            this.$router.go(-1);
+        },
         onSubmit (evt) {
             const data = serialize(evt.target, { hash: true });
             data.id = this.$route.params.id;
@@ -89,5 +92,13 @@ export default {
     width: 100%;
     justify-content: flex-end;
     display: flex;
+
+    > * {
+        margin: 0 10px 0 0;
+
+        &:last-child {
+            margin: 0;
+        }
+    }
 }
 </style>

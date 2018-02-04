@@ -14,7 +14,7 @@
         <template slot="cell4" v-if="book.bookNumber">{{`Book ${book.bookNumber}`}}</template>
         <template slot="actions">
             <link-button :to="book.editUrl">Edit</link-button>
-            <ui-button :onClick="onRemove">Remove</ui-button>
+            <ui-button :onClick="onRemoveClick">Remove</ui-button>
         </template>
     </list-item>
 </template>

@@ -1,16 +1,35 @@
 <template>
     <div :id="id" class="page">
-        <slot></slot>
+        <header-bar>
+            <template slot="content-left">
+                <slot name="header-left"></slot>
+            </template>
+            <nav slot="content-right">
+                <router-link to="/">Books</router-link>
+                <router-link to="/authors">Authors</router-link>
+                <router-link to="/series">Series</router-link>
+            </nav>
+        </header-bar>
+        <main class="main">
+            <div class="content">
+                <slot name="content"></slot>
+            </div>
+        </main>
     </div>
 </template>
 
 <script>
+import HeaderBar from '@/components/HeaderBar';
+
 export default {
     name: 'Page',
     props: {
         id: {
             type: String,
         },
+    },
+    components: {
+        HeaderBar,
     },
 };
 </script>
@@ -22,16 +41,22 @@ export default {
     width: 100%;
     height: 100%;
     background-color: #ffffff;
+    overflow: hidden;
     align-items: center;
     flex-direction: column;
     display: flex;
 }
-.content {
+.main {
     width: 100%;
-    padding: 20px 40px 0;
-    justify-content: center;
+    align-items: center;
     flex-direction: column;
     display: flex;
+    overflow: auto;
+}
+.content {
+    width: 100%;
+    max-width: 1080px;
+    padding: 40px;
 }
 h1 {
     font-size: 1.1em;

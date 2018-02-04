@@ -72,6 +72,15 @@ const store = {
             this.state = response.data;
         });
     },
+    removeSeries (id) {
+        if (this.debug) {
+            console.info('removeSeries triggered with', id);
+        }
+
+        api.removeSeries(id, response => {
+            this.state = response.data;
+        });
+    },
     updateState (state) {
         if (this.debug) {
             console.info('updateState triggered with', state);

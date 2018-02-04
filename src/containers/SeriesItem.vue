@@ -1,8 +1,8 @@
 <template>
     <list-item>
-        <template slot="cell1">{{name}}</template>
+        <template slot="cell1">{{series.title}}</template>
         <template slot="actions">
-            <link-button :to="author.editUrl">Edit</link-button>
+            <link-button :to="series.editUrl">Edit</link-button>
             <ui-button :onClick="onRemoveClick">Remove</ui-button>
         </template>
     </list-item>
@@ -14,9 +14,9 @@ import UiButton from '@/components/UiButton';
 import LinkButton from '@/components/LinkButton';
 
 export default {
-    name: 'AuthorItem',
+    name: 'SeriesItem',
     props: {
-        author: {
+        series: {
             type: Object,
             default: {},
         },
@@ -24,21 +24,9 @@ export default {
             type: Function,
         },
     },
-    computed: {
-        name () {
-            let names = [];
-            if (this.author.lastName) {
-                names.push(this.author.lastName);
-            }
-            if (this.author.firstName) {
-                names.push(this.author.firstName);
-            }
-            return names.join(', ');
-        },
-    },
     methods: {
         onRemoveClick () {
-            this.onRemove(this.author.id);
+            this.onRemove(this.series.id);
         },
     },
     components: {
