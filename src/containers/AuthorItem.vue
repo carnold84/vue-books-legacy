@@ -1,6 +1,10 @@
 <template>
     <list-item>
-        <template slot="cell1">{{name}}</template>
+        <template slot="cell1">
+            <router-link :to="url">
+                <span class="title-text">{{name}}</span>
+            </router-link>
+        </template>
         <template slot="actions">
             <link-button :to="author.editUrl">Edit</link-button>
             <ui-button :onClick="onRemoveClick">Remove</ui-button>
@@ -34,6 +38,9 @@ export default {
                 names.push(this.author.firstName);
             }
             return names.join(', ');
+        },
+        url () {
+            return `/books/author/${this.author.id}`;
         },
     },
     methods: {

@@ -26,7 +26,15 @@ import LinkButton from '@/components/LinkButton';
 
 export default {
     name: 'BookItem',
-    props: ['book', 'onRemove'],
+    props: {
+        book: {
+            type: Object,
+            default: {},
+        },
+        onRemove: {
+            type: Function,
+        },
+    },
     methods: {
         onRemoveClick () {
             this.onRemove(this.book.id);
@@ -44,7 +52,7 @@ export default {
                     ...author,
                     key: `${this.book.id}-${author.id}`,
                     label: `${author.lastName}, ${author.firstName}`,
-                    url: `/author/${author.id}`,
+                    url: `/books/author/${author.id}`,
                 };
             });
         },
@@ -53,7 +61,7 @@ export default {
             if (this.book.series) {
                 series = {
                     ...this.book.series,
-                    url: `/series/${this.book.series.id}`,
+                    url: `/books/series/${this.book.series.id}`,
                 };
             }
             return series;

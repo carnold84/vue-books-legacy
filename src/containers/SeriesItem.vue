@@ -1,6 +1,10 @@
 <template>
     <list-item>
-        <template slot="cell1">{{series.title}}</template>
+        <template slot="cell1">
+            <router-link :to="url">
+                <span class="title-text">{{series.title}}</span>
+            </router-link>
+        </template>
         <template slot="actions">
             <link-button :to="series.editUrl">Edit</link-button>
             <ui-button :onClick="onRemoveClick">Remove</ui-button>
@@ -24,15 +28,20 @@ export default {
             type: Function,
         },
     },
-    methods: {
-        onRemoveClick () {
-            this.onRemove(this.series.id);
-        },
-    },
     components: {
         ListItem,
         UiButton,
         LinkButton,
+    },
+    computed: {
+        url () {
+            return `/books/series/${this.series.id}`;
+        },
+    },
+    methods: {
+        onRemoveClick () {
+            this.onRemove(this.series.id);
+        },
     },
 };
 </script>

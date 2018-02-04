@@ -19,12 +19,12 @@ export default new Router({
             component: Home,
         },
         {
-            path: '/author/:name',
+            path: '/books/author/:name',
             name: 'AuthorBooks',
             component: Home,
         },
         {
-            path: '/series/:title',
+            path: '/books/series/:title',
             name: 'SeriesBooks',
             component: Home,
         },
