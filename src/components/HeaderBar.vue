@@ -24,8 +24,8 @@ export default {
     color: #ffffff;
     margin: 0;
     padding: 0 40px;
-    background-color: #1e70ce;
-    border-bottom: #1e70ce solid 1px;
+    background-color: $primary;
+    border-bottom: $primary solid 1px;
     box-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
     flex-shrink: 0;
     justify-content: space-between;
@@ -54,7 +54,7 @@ export default {
 
         a:hover {
             color: #e98400;
-            border-bottom: #e98400 dotted 1px;
+            border-bottom: $secondary dotted 1px;
             margin: 1px 5px 0 0;
         }
     }

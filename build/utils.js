@@ -53,6 +53,14 @@ exports.cssLoaders = function (options) {
       return ['vue-style-loader'].concat(loaders)
     }
   }
+  
+  // https://github.com/vuejs-templates/webpack/issues/149
+  let scssOptions = {
+    includePaths: [
+      'src/styles'
+    ],
+    data: '@import "src/styles/main";'
+  }
 
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {
@@ -60,7 +68,7 @@ exports.cssLoaders = function (options) {
     postcss: generateLoaders(),
     less: generateLoaders('less'),
     sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
+    scss: generateLoaders('sass', scssOptions),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
   }

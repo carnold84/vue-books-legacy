@@ -74,8 +74,8 @@ export default {
     }
     &.is-primary {
         color: rgba(255, 255, 255, 1);
-        border: #1e70ce solid 1px;
-        background-color: #1e70ce;
+        border: $primary solid 1px;
+        background-color: $primary;
         box-shadow: rgba(0, 0, 0, 0.35) 0 1px 2px;
 
         &:hover {

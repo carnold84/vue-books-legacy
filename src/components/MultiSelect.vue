@@ -66,23 +66,23 @@ export default {
 </style>
 <style lang="scss">
 .multiselect__tag {
-    background: #1e70ce;
+    background: $primary;
 }
 .multiselect__tag-icon {
     &:focus {
-        background: #1e70ce;
+        background: $primary;
     }
     &:hover {
-        background: darken(#1e70ce, 10);
+        background: darken($primary, 10);
     }
     &:after {
         color: #ffffff;
     }
 }
 .multiselect__option--highlight {
-    background: #1e70ce;
+    background: $primary;
 }
 .multiselect__option--highlight::after {
-    background: #1e70ce;
+    background: $primary;
 }
 </style>

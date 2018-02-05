@@ -13,7 +13,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 .text-field {
     position: relative;
     width: 100%;
@@ -39,6 +39,6 @@ export default {
 }
 .input:focus {
     outline: none;
-    border-bottom: #1e70ce solid 1px;
+    border-bottom: $primary solid 1px;
 }
 </style>

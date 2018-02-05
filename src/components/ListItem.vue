@@ -90,13 +90,13 @@ export default {
         .title-text {
             border-bottom-style: dotted;
             border-bottom-width: 1px;
-            border-bottom-color: #1e70ce;
+            border-bottom-color: $primary;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         a:hover .title-text {
-            border-bottom-color: #e98400;
+            border-bottom-color: $secondary;
         }
     }
 }

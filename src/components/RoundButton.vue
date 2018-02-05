@@ -63,14 +63,14 @@ export default {
 
     &:hover {
         color: #ffffff;
-        background-color: #1e70ce;
-        border: #1e70ce solid 1px;
+        background-color: $primary;
+        border: $primary solid 1px;
         box-shadow: rgba(0, 0, 0, 0.25) 0 1px 3px;
     }
     &.is-primary {
         color: rgba(255, 255, 255, 1);
-        border: #1e70ce solid 1px;
-        background-color: #1e70ce;
+        border: $primary solid 1px;
+        background-color: $primary;
         box-shadow: rgba(0, 0, 0, 0.35) 0 1px 2px;
     }
     &.is-primary:hover {
