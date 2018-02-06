@@ -59,4 +59,9 @@ export default {
         }
     }
 }
+@include media("<=tablet") {
+    .header-bar {
+        padding: 0 20px;
+    }
+}
 </style>

@@ -6,6 +6,7 @@
 body {
   padding: 0;
   margin: 0;
+  font-family: $font-family-primary;
 }
 a,
 a:link,
@@ -17,7 +18,18 @@ a:hover {
   color: $secondary;
 }
 button {
-  font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
+  font-family: $font-family-primary;
+}
+#app {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-family: $font-family-primary;
+  font-size: 15px;
+  color: $font-color-primary;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 .svg-icon {
   display: inline-block;
@@ -31,17 +43,6 @@ button {
 .svg-fill {
   fill: currentColor;
   stroke: none;
-}
-#app {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  color: rgba(0, 0, 0, 0.8);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
 }
 .anim-section {
   opacity: 0;

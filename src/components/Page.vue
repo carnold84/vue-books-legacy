@@ -56,9 +56,9 @@ export default {
 .content {
     width: 100%;
     max-width: 1080px;
-    padding: 40px;
+    padding: 20px 40px 40px;
 }
-@media (max-width: $breakpoint-tablet) {
+@include media("<=tablet") {
     .content {
         padding: 20px;
     }
