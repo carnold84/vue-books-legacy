@@ -10,19 +10,25 @@
             <router-link v-if="series" :to="series.url">
                 <span class="title-text">{{series.title}}</span>
             </router-link>
+            <span v-if="book.bookNumber">{{`Book ${book.bookNumber}`}}</span>
         </template>
-        <template slot="cell4" v-if="book.bookNumber">{{`Book ${book.bookNumber}`}}</template>
         <template slot="actions">
-            <link-button :to="book.editUrl">Edit</link-button>
-            <ui-button :onClick="onRemoveClick">Remove</ui-button>
+            <round-link-button :to="book.editUrl">
+                <svgicon name="edit" width="18" height="18"></svgicon>
+            </round-link-button>
+            <round-button :onClick="onRemoveClick">
+                <svgicon name="delete" width="18" height="18"></svgicon>
+            </round-button>
         </template>
     </list-item>
 </template>
 
 <script>
 import ListItem from '@/components/ListItem';
-import UiButton from '@/components/UiButton';
-import LinkButton from '@/components/LinkButton';
+import RoundButton from '@/components/RoundButton';
+import RoundLinkButton from '@/components/RoundLinkButton';
+import '@/compiled-icons/edit';
+import '@/compiled-icons/delete';
 
 export default {
     name: 'BookItem',
@@ -42,8 +48,8 @@ export default {
     },
     components: {
         ListItem,
-        UiButton,
-        LinkButton,
+        RoundButton,
+        RoundLinkButton,
     },
     computed: {
         authors () {

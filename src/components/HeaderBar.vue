@@ -48,6 +48,7 @@ export default {
         }
 
         a {
+            color: #ffffff;
             border-bottom: #ffffff dotted 1px;
             margin: 1px 5px 0 0;
         }

@@ -72,6 +72,55 @@ export default {
 .actions > :last-child {
     margin: 0;
 }
+@include media("<=tablet") {
+    .list-item {
+        height: auto;
+        padding: 14px;
+        margin: 0 0 10px;
+        border: #eeeeee solid 1px;
+        grid-template-columns: 28% 28% 28% 16%;
+        grid-template-rows: 26px 26px 26px;
+        display: grid;
+    }
+    .cell {
+        padding: 0;
+        white-space: nowrap;
+        overflow: hidden;
+
+        &:nth-child(1) {
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
+        &:nth-child(2) {
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 2;
+            grid-row-end: 2;
+        }
+        &:nth-child(3) {
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 3;
+            grid-row-end: 3;
+        }
+    }
+    .actions {
+        grid-column-start: 4;
+        grid-column-end: 4;
+        grid-row-start: 1;
+        grid-row-end: 4;
+        padding: 0 0 0 10px;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+
+        > * {
+            margin: 0 0 10px 0;
+        }
+    }
+}
 </style>
 <style lang="scss">
 .list-item {
