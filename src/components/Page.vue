@@ -34,7 +34,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .page {
     position: absolute;
@@ -48,6 +47,7 @@ export default {
 }
 .main {
     width: 100%;
+    min-height: 100%;
     align-items: center;
     flex-direction: column;
     display: flex;

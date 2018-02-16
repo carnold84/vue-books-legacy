@@ -9,7 +9,7 @@
                 <div class="anim-section">
                     <text-field label="Title" name="title" :value="seriesData.title" />
                 </div>
-                <div class="buttons anim-section">
+                <div class="form-buttons anim-section">
                     <ui-button :height="32" :onClick="onCancel">Cancel</ui-button>
                     <ui-button :isPrimary="true" :isSubmit="true" :height="32">{{submitLabel}}</ui-button>
                 </div>
@@ -75,27 +75,3 @@ export default {
     },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-.content {
-    max-width: 1080px;
-    width: 100%;
-    padding: 40px 40px 0;
-    flex-direction: column;
-    display: flex;
-}
-.buttons {
-    width: 100%;
-    justify-content: flex-end;
-    display: flex;
-
-    > * {
-        margin: 0 10px 0 0;
-
-        &:last-child {
-            margin: 0;
-        }
-    }
-}
-</style>

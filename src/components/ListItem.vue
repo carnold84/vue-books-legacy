@@ -9,9 +9,6 @@
         <div class="cell">
             <slot name="cell3"></slot>
         </div>
-        <div class="cell">
-            <slot name="cell4"></slot>
-        </div>
         <div class="actions">
             <slot name="actions"></slot>
         </div>
@@ -51,13 +48,10 @@ export default {
         flex-grow: 1;
     }
     &:nth-child(2) {
-        flex-basis: 30%;
+        flex-basis: 40%;
     }
     &:nth-child(3) {
-        flex-basis: 20%;
-    }
-    &:nth-child(4) {
-        flex-basis: 15%;
+        flex-basis: 25%;
     }
 }
 .actions {

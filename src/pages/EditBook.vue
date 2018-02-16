@@ -28,7 +28,7 @@
                 <div class="anim-section">
                     <text-field label="Book Number" name="bookNumber" :value="bookData.bookNumber" />
                 </div>
-                <div class="buttons anim-section">
+                <div class="form-buttons anim-section">
                     <ui-button :height="32" :onClick="onCancel">Cancel</ui-button>
                     <ui-button :isPrimary="true" :isSubmit="true" :height="32">Save Book</ui-button>
                 </div>
@@ -155,21 +155,7 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.buttons {
-    width: 100%;
-    justify-content: flex-end;
-    display: flex;
-
-    > * {
-        margin: 0 10px 0 0;
-
-        &:last-child {
-            margin: 0;
-        }
-    }
-}
 .authors {
     position: relative;
     margin: 0 0 20px;

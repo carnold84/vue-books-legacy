@@ -1,6 +1,9 @@
 <template>
     <header class="header-bar">
         <div class="content-left">
+            <span class="logo">
+                <svgicon name="logo" width="20" height="20"></svgicon>
+            </span>
             <slot name="content-left"></slot>
         </div>
         <div class="content-right">
@@ -10,6 +13,8 @@
 </template>
 
 <script>
+import '@/compiled-icons/logo';
+
 export default {
     name: 'HeaderBar',
 };
@@ -32,32 +37,32 @@ export default {
     align-items: center;
     flex-direction: row;
     display: flex;
+}
+
+.logo {
+    margin: 0 10px 0 0;
+}
+
+.content-left, .content-right {
+    align-items: center;
+    display: flex;
+
+    h1, h2 {
+        font-size: 1em;
+        font-weight: normal;
+        margin: 0;
+    }
 
     a {
         color: #ffffff;
+        border-bottom: #ffffff dotted 1px;
+        margin: 1px 5px 0 0;
     }
 
-    .content-left, .content-right {
-        align-items: center;
-        display: flex;
-
-        h1, h2 {
-            font-size: 1em;
-            font-weight: normal;
-            margin: 0;
-        }
-
-        a {
-            color: #ffffff;
-            border-bottom: #ffffff dotted 1px;
-            margin: 1px 5px 0 0;
-        }
-
-        a:hover {
-            color: #e98400;
-            border-bottom: $secondary dotted 1px;
-            margin: 1px 5px 0 0;
-        }
+    a:hover {
+        color: #e98400;
+        border-bottom: $secondary dotted 1px;
+        margin: 1px 5px 0 0;
     }
 }
 @include media("<=tablet") {

@@ -10,7 +10,7 @@
             <router-link v-if="series" :to="series.url">
                 <span class="title-text">{{series.title}}</span>
             </router-link>
-            <span v-if="book.bookNumber">{{`Book ${book.bookNumber}`}}</span>
+            <span v-if="book.bookNumber">{{`- Book ${book.bookNumber}`}}</span>
         </template>
         <template slot="actions">
             <round-link-button :to="book.editUrl">
