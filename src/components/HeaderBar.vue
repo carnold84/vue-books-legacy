@@ -2,7 +2,7 @@
     <header class="header-bar">
         <div class="content-left">
             <span class="logo">
-                <svgicon name="logo" width="20" height="20"></svgicon>
+                <svgicon name="logo" width="24" height="24"></svgicon>
             </span>
             <slot name="content-left"></slot>
         </div>

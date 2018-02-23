@@ -55,12 +55,12 @@ exports.cssLoaders = function (options) {
   }
   
   // https://github.com/vuejs-templates/webpack/issues/149
-  let scssOptions = {
+  /* let scssOptions = {
     includePaths: [
       'src/styles'
     ],
     data: '@import "src/styles/main";'
-  }
+  } */
 
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {

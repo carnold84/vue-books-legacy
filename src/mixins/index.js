@@ -1,3 +1,11 @@
+export const appMixins = {
+    computed: {
+        appName () {
+            return this.config.app.name;
+        },
+    },
+};
+
 export const authorMixins = {
     methods: {
         getAuthor (id) {

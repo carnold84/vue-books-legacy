@@ -1,7 +1,7 @@
 <template>
     <Page id="books">
         <template slot="header-left">
-            <router-link to="/">Vue Books</router-link>
+            <router-link to="/">{{appName}}</router-link>
         </template>
         <template slot="content">
             <action-bar :hasBorder="sortedBooks.length === 0">
@@ -27,7 +27,7 @@
 
 <script>
 import store from '@/store';
-import {authorMixins, seriesMixins} from '@/mixins';
+import {appMixins, authorMixins, seriesMixins} from '@/mixins';
 import Page from '@/components/Page';
 import HeaderBar from '@/components/HeaderBar';
 import ActionBar from '@/components/ActionBar';
@@ -43,6 +43,9 @@ export default {
     data () {
         return store.state;
     },
+    created () {
+        store.getAllData();
+    },
     components: {
         Page,
         HeaderBar,
@@ -54,6 +57,7 @@ export default {
         BookItem,
     },
     mixins: [
+        appMixins,
         authorMixins,
         seriesMixins,
     ],

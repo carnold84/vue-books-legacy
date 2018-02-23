@@ -5,14 +5,14 @@
   "author": "Chris Arnold <chris.wittyname@gmail.com>",
   "private": true,
   "scripts": {
+    "generate-icons": "vsvg -s ./svg-icons -t ./src/compiled-icons",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
+    "start": "npm run generate-icons && npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
-    "build": "node build/build.js",
-    "generate-icons": "vsvg -s ./svg-icons -t ./src/compiled-icons"
+    "build": "node build/build.js"
   },
   "dependencies": {
     "vue": "^2.5.2",

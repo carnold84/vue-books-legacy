@@ -1,107 +1,113 @@
 import uuid from 'uuid/v4';
 
-// localStorage.removeItem('vue-books');
-let state = localStorage.getItem('vue-books');
-
-if (state === null) {
-    state = {
-        books: {
-            allIds: [],
-            byId: {},
-        },
-        authors: {
-            allIds: [],
-            byId: {},
-        },
-        authorBook: [],
-        series: {
-            allIds: [],
-            byId: {},
-        },
-        seriesBook: [],
-    };
-    state = {
-        books: {
-            allIds: [],
-            byId: {},
-        },
-        authors: {
-            allIds: ['author-1', 'author-2', 'author-3', 'author-4'],
-            byId: {
-                'author-1': {
-                    id: 'author-1',
-                    firstName: 'Number 1',
-                    lastName: 'Author',
-                },
-                'author-2': {
-                    id: 'author-2',
-                    firstName: 'Number 2',
-                    lastName: 'Author',
-                },
-                'author-3': {
-                    id: 'author-3',
-                    firstName: 'Number 3',
-                    lastName: 'Author',
-                },
-                'author-4': {
-                    id: 'author-4',
-                    firstName: 'Number 4',
-                    lastName: 'Author',
-                },
+const testData = {
+    books: {
+        allIds: [],
+        byId: {},
+    },
+    authors: {
+        allIds: ['author-1', 'author-2', 'author-3', 'author-4'],
+        byId: {
+            'author-1': {
+                id: 'author-1',
+                firstName: 'Number 1',
+                lastName: 'Author',
+            },
+            'author-2': {
+                id: 'author-2',
+                firstName: 'Number 2',
+                lastName: 'Author',
+            },
+            'author-3': {
+                id: 'author-3',
+                firstName: 'Number 3',
+                lastName: 'Author',
+            },
+            'author-4': {
+                id: 'author-4',
+                firstName: 'Number 4',
+                lastName: 'Author',
             },
         },
-        authorBook: [],
-        series: {
-            allIds: ['series-3', 'series-1', 'series-4', 'series-2'],
-            byId: {
-                'series-1': {
-                    id: 'series-1',
-                    title: 'Series Number 1',
-                },
-                'series-2': {
-                    id: 'series-2',
-                    title: 'Series Number 2',
-                },
-                'series-3': {
-                    id: 'series-3',
-                    title: 'Series Number 3',
-                },
-                'series-4': {
-                    id: 'series-4',
-                    title: 'Series Number 4',
-                },
+    },
+    authorBook: [],
+    series: {
+        allIds: ['series-3', 'series-1', 'series-4', 'series-2'],
+        byId: {
+            'series-1': {
+                id: 'series-1',
+                title: 'Series Number 1',
+            },
+            'series-2': {
+                id: 'series-2',
+                title: 'Series Number 2',
+            },
+            'series-3': {
+                id: 'series-3',
+                title: 'Series Number 3',
+            },
+            'series-4': {
+                id: 'series-4',
+                title: 'Series Number 4',
             },
         },
-    };
+    },
+};
 
-    for (let index = 0; index < 40; index++) {
-        const book = {
-            id: 'book-' + (index + 1),
-            title: 'Book Number ' + (index + 1),
-            seriesId: state.series.allIds[Math.floor(Math.random() * (state.series.allIds.length - 1))],
-            bookNumber: Math.round(Math.random() * 5).toString(),
-        };
-        state.books.allIds.push(book.id);
-        state.books.byId[book.id] = book;
-        const numAuthors = Math.round(Math.random() * 4);
-        let authors = [];
-        for (let index = 0; index < numAuthors; index++) {
-            authors.push(state.authors.allIds[index]);
-        }
-        authors.forEach((authorId, i) => {
-            state.authorBook.push({
-                id: 'author-' + i + '-' + book.id,
-                bookId: book.id,
-                authorId: authorId,
-            });
-        });
+for (let index = 0; index < 40; index++) {
+    const book = {
+        id: 'book-' + (index + 1),
+        title: 'Book Number ' + (index + 1),
+        seriesId: testData.series.allIds[Math.floor(Math.random() * (testData.series.allIds.length - 1))],
+        bookNumber: Math.round(Math.random() * 5).toString(),
+    };
+    testData.books.allIds.push(book.id);
+    testData.books.byId[book.id] = book;
+    const numAuthors = Math.round(Math.random() * 4);
+    let authors = [];
+    for (let index = 0; index < numAuthors; index++) {
+        authors.push(testData.authors.allIds[index]);
     }
-} else {
-    state = JSON.parse(state);
+    authors.forEach((authorId, i) => {
+        testData.authorBook.push({
+            id: 'author-' + i + '-' + book.id,
+            bookId: book.id,
+            authorId: authorId,
+        });
+    });
 }
 
+let databaseName;
+let state;
+
 export default {
-    getAllData (callback) {
+    init (dbName, callback) {
+        databaseName = dbName;
+
+        // localStorage.removeItem(databaseName);
+        state = localStorage.getItem(databaseName);
+
+        if (state === null) {
+            state = {
+                books: {
+                    allIds: [],
+                    byId: {},
+                },
+                authors: {
+                    allIds: [],
+                    byId: {},
+                },
+                authorBook: [],
+                series: {
+                    allIds: [],
+                    byId: {},
+                },
+                seriesBook: [],
+            };
+        } else {
+            state = JSON.parse(state);
+        }
+
         updateStorage(state);
 
         const response = {
@@ -109,7 +115,19 @@ export default {
             status: 1,
         };
 
-        callback(response);
+        if (callback) {
+            callback(response);
+        }
+    },
+    getAllData (callback) {
+        const response = {
+            data: state,
+            status: 1,
+        };
+
+        if (callback) {
+            callback(response);
+        }
     },
     addBook (data, callback) {
         let book = {
@@ -135,7 +153,9 @@ export default {
             status: 1,
         };
 
-        callback(response);
+        if (callback) {
+            callback(response);
+        }
     },
     removeBook (id, callback) {
         // remove from order
@@ -153,7 +173,9 @@ export default {
             status: 1,
         };
 
-        callback(response);
+        if (callback) {
+            callback(response);
+        }
     },
     unlinkAuthors (bookId) {
         state.authorBook = state.authorBook.filter(record => {
@@ -188,7 +210,9 @@ export default {
             status: 1,
         };
 
-        callback(response);
+        if (callback) {
+            callback(response);
+        }
     },
     removeAuthor (id, callback) {
         // remove from order
@@ -206,7 +230,9 @@ export default {
             status: 1,
         };
 
-        callback(response);
+        if (callback) {
+            callback(response);
+        }
     },
     addSeries (data, callback) {
         let series = createSeries(data);
@@ -225,7 +251,9 @@ export default {
             status: 1,
         };
 
-        callback(response);
+        if (callback) {
+            callback(response);
+        }
     },
     removeSeries (id, callback) {
         // remove from order
@@ -240,12 +268,14 @@ export default {
             status: 1,
         };
 
-        callback(response);
+        if (callback) {
+            callback(response);
+        }
     },
 };
 
 const updateStorage = state => {
-    localStorage.setItem('vue-books', JSON.stringify(state));
+    localStorage.setItem(databaseName, JSON.stringify(state));
 };
 
 const createAuthor = data => {
