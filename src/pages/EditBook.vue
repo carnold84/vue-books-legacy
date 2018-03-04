@@ -1,51 +1,67 @@
 <template>
-    <div id="edit-book">
-        <header-bar>
-            <div class="header-content">
-                <router-link to="/">Vue Books</router-link>
-                <h2>/ Add Book</h2>
-            </div>
-        </header-bar>
-        <div class="content">
+    <Page id="edit-book">
+        <template slot="header-left">
+            <router-link to="/">{{appName}}</router-link>
+            <h2>/ Add Book</h2>
+        </template>
+        <template slot="content">
             <form v-on:submit.prevent="onSubmit">
                 <div class="anim-section">
-                    <text-field label="Title" name="title" :value="book.title" />
+                    <text-field label="Title" name="title" :value="bookData.title" />
+                </div>
+                <div class="anim-section authors">
+                    <multi-select
+                        :data="authorsData"
+                        placeholder="Select Authors..."
+                        :onChange="onAuthorsChange"
+                        :multiple="true" />
+                    <round-link-button class="add-btn" to="/add-author">
+                        <svgicon name="add" width="20" height="20"></svgicon>
+                    </round-link-button>
+                </div>
+                <div class="anim-section series">
+                    <multi-select :data="seriesData" placeholder="Select Series..." :onChange="onSeriesChange" />
+                    <round-link-button class="add-btn" to="/add-series">
+                        <svgicon name="add" width="20" height="20"></svgicon>
+                    </round-link-button>
                 </div>
                 <div class="anim-section">
-                    <text-field label="Author's First Name" name="firstName" :value="book.firstName" />
+                    <text-field label="Book Number" name="bookNumber" :value="bookData.bookNumber" />
                 </div>
-                <div class="anim-section">
-                    <text-field label="Author's Last Name" name="lastName" :value="book.lastName" />
-                </div>
-                <div class="anim-section">
-                    <text-field label="Series" name="series" :value="book.series" />
-                </div>
-                <div class="anim-section">
-                    <text-field label="Book Number" name="bookNumber" :value="book.bookNumber" />
-                </div>
-                <div class="buttons anim-section">
-                    <ui-button :isPrimary="true">Save Book</ui-button>
+                <div class="form-buttons anim-section">
+                    <ui-button :height="32" :onClick="onCancel">Cancel</ui-button>
+                    <ui-button :isPrimary="true" :isSubmit="true" :height="32">Save Book</ui-button>
                 </div>
             </form>
-        </div>
-    </div>
+        </template>
+    </Page>
 </template>
 
 <script>
 import serialize from 'form-serialize';
 import store from '@/store';
-import {getAuthors, getSeries} from '@/utils/book';
-import HeaderBar from '@/components/HeaderBar';
+import {appMixins} from '@/mixins';
+import Page from '@/components/Page';
 import TextField from '@/components/TextField';
 import UiButton from '@/components/UiButton';
+import MultiSelect from '@/components/MultiSelect';
+import RoundLinkButton from '@/components/RoundLinkButton';
+import TagChip from '@/components/TagChip';
+import '@/compiled-icons/add';
 
 export default {
     name: 'EditBook',
     components: {
-        HeaderBar,
+        Page,
         TextField,
         UiButton,
+        MultiSelect,
+        RoundLinkButton,
+        TagChip,
     },
+    mixins: [
+        appMixins,
+    ],
     data () {
         return store.state;
     },
@@ -58,31 +74,84 @@ export default {
         wrapper.classList.add('show');
     },
     computed: {
-        book () {
-            let book = {};
-
+        bookData () {
             if (this.$route.params.id) {
-                const data = this.booksById[this.$route.params.id];
-
-                const authors = getAuthors(data, this.authors, this.booksAuthors);
-                const series = getSeries(data, this.series, this.booksSeries);
-                book = {
-                    id: data.id,
-                    title: data.title,
-                    firstName: authors ? authors[0].firstName : undefined,
-                    lastName: authors ? authors[0].lastName : undefined,
-                    series: series ? series.title : undefined,
-                    bookNumber: data.bookNumber,
-                };
+                return this.data.books.byId[this.$route.params.id];
+            } else {
+                return {};
             }
+        },
+        authorsData () {
+            let options = [];
+            let bookAuthors = [];
+            let values = [];
 
-            return book;
+            if (this.bookData !== undefined) {
+                this.data.authorBook.forEach(record => {
+                    if (this.bookData.id === record.bookId) {
+                        bookAuthors.push(record.authorId);
+                    }
+                });
+            }
+            this.data.authors.allIds.forEach(authorId => {
+                const author = this.data.authors.byId[authorId];
+                const authorData = {
+                    ...author,
+                    label: `${author.lastName}, ${author.firstName}`,
+                };
+                options.push(authorData);
+                if (bookAuthors.includes(authorId)) {
+                    values.push(authorData);
+                }
+            });
+            this.bookAuthors = values;
+
+            return {
+                values,
+                options,
+            };
+        },
+        seriesData () {
+            let options = [];
+            let values = null;
+
+            this.data.series.allIds.forEach(seriesId => {
+                const series = this.data.series.byId[seriesId];
+                const seriesData = {
+                    ...series,
+                    label: series.title,
+                };
+                options.push(seriesData);
+                if (seriesId === this.bookData.seriesId) {
+                    values = seriesData;
+                }
+            });
+            this.bookSeries = values;
+
+            return {
+                values,
+                options,
+            };
         },
     },
     methods: {
+        onAuthorsChange (authors) {
+            this.bookAuthors = authors;
+        },
+        onSeriesChange (series) {
+            this.bookSeries = series;
+        },
+        onCancel (evt) {
+            evt.preventDefault();
+            this.$router.go(-1);
+        },
         onSubmit (evt) {
             const data = serialize(evt.target, { hash: true });
             data.id = this.$route.params.id;
+            data.authors = this.bookAuthors.map(author => {
+                return author.id;
+            });
+            data.seriesId = this.bookSeries ? this.bookSeries.id : undefined;
             store.addBook(data);
             this.$router.go(-1);
         },
@@ -90,52 +159,22 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-#edit-book {
-    align-items: center;
-    flex-direction: column;
-    display: flex;
-}
-.content {
-    max-width: 1080px;
-    width: 100%;
-    padding: 40px 40px 0;
-    flex-direction: column;
-    display: flex;
-}
-.buttons {
-    width: 100%;
-    justify-content: flex-end;
-    display: flex;
-}
-.button {
-    padding: 8px 25px;
-    color: #ffffff;
-    background-color: #1e70ce;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-.button:hover {
-    background-color: #3282df;
-}
-.header-content {
+<style lang="scss" scoped>
+.authors {
+    position: relative;
+    margin: 0 0 20px;
     align-items: center;
     display: flex;
+    z-index: 10;
 }
-.header-content h2 {
-    font-size: 1em;
-    font-weight: normal;
-    margin: 0;
+.series {
+    position: relative;
+    margin: 0 0 20px;
+    align-items: center;
+    display: flex;
+    z-index: 9;
 }
-.header-content a {
-    border-bottom: #ffffff dotted 1px;
-    margin: 1px 5px 0 0;
-}
-.header-content a:hover {
-    color: #e98400;
-    border-bottom: #e98400 dotted 1px;
-    margin: 1px 5px 0 0;
+.add-btn {
+    margin: 0 0 0 10px;
 }
 </style>

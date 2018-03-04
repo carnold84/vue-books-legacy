@@ -12,8 +12,7 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 .text-field {
     position: relative;
     width: 100%;
@@ -24,7 +23,7 @@ export default {
 }
 .label {
     width: 100%;
-    font-size: 13px;
+    font-size: 14px;
     color: rgba(0, 0, 0, 0.5);
     margin: 0 0 5px;
 }
@@ -39,6 +38,6 @@ export default {
 }
 .input:focus {
     outline: none;
-    border-bottom: #1e70ce solid 1px;
+    border-bottom: var(--primary) solid 1px;
 }
 </style>

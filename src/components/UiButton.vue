@@ -1,14 +1,16 @@
 <template>
     <button 
         v-if="isButton"
-        v-on:click="onClick ? onClick() : ''"
-        :class="{'ui-button': true, 'is-primary': isPrimary }">
+        v-on:click="click"
+        :class="{'ui-button': true, 'is-primary': isPrimary }"
+        :style="style">
         <slot></slot>
     </button>
     <div
         v-else
         :class="{'ui-button': true, 'is-primary': isPrimary }"
-        v-on:click="onClick ? onClick() : ''">
+        :style="style"
+        v-on:click="click">
         <slot></slot>
     </div>
 </template>
@@ -29,39 +31,59 @@ export default {
             type: Function,
             default: null,
         },
+        height: {
+            type: Number,
+            default: 28,
+        },
+    },
+    computed: {
+        style () {
+            return {
+                height: `${this.height}px`,
+            };
+        },
+    },
+    methods: {
+        click (evt) {
+            if (this.onClick) {
+                this.onClick(evt);
+            }
+        },
     },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 .ui-button {
-    height: 24px;
-    font-size: 12px;
-    line-height: 15px;
-    color: rgba(0, 0, 0, 0.65);
-    padding: 0 10px;
-    border: #dddddd solid 1px;
-    background-color: #ffffff;
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--font-color-secondary);
+    padding: 0 12px;
+    border: var(--button-border-color) solid 1px;
+    background-color: var(--button-bg-color);
     border-radius: 3px;
     box-shadow: rgba(0, 0, 0, 0.15) 0 1px 1px;
     cursor: pointer;
     align-items: center;
     display: flex;
-}
-.ui-button:hover {
-    color: rgba(0, 0, 0, 0.8);
-    box-shadow: rgba(0, 0, 0, 0.25) 0 1px 3px;
-}
-.ui-button.is-primary {
-    color: rgba(255, 255, 255, 1);
-    border: #1e70ce solid 1px;
-    background-color: #1e70ce;
-    box-shadow: rgba(0, 0, 0, 0.35) 0 1px 2px;
-}
-.ui-button.is-primary:hover {
-    border: #3489eb solid 1px;
-    background-color: #3489eb;
-    box-shadow: rgba(0, 0, 0, 0.55) 0 1px 4px;
+
+    &:hover {
+        color: var(--font-color-primary);
+        background-color: var(--button-bg-color__HOVER);
+        border: var(--button-border-color__HOVER) solid 1px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0 1px 3px;
+    }
+    &.is-primary {
+        color: rgba(255, 255, 255, 1);
+        border: var(--button-primary-border-color) solid 1px;
+        background-color: var(--button-primary-bg-color);
+        box-shadow: rgba(0, 0, 0, 0.35) 0 1px 2px;
+
+        &:hover {
+            border: var(--button-primary-border-color__HOVER) solid 1px;
+            background-color: var(--button-primary-bg-color__HOVER);
+            box-shadow: rgba(0, 0, 0, 0.55) 0 1px 4px;
+        }
+    }
 }
 </style>

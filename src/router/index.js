@@ -1,30 +1,32 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '@/pages/Home';
+import Books from '@/pages/Books';
+import Authors from '@/pages/Authors';
+import Series from '@/pages/Series';
 import EditBook from '@/pages/EditBook';
+import EditAuthor from '@/pages/EditAuthor';
+import EditSeries from '@/pages/EditSeries';
 
 Vue.use(Router);
 
-const isDemo = true;
-
 export default new Router({
-    mode: isDemo ? 'hash' : 'history',
+    mode: 'hash',
     base: '/demo/',
     routes: [
         {
             path: '/',
-            name: 'Home',
-            component: Home,
+            name: 'Books',
+            component: Books,
         },
         {
-            path: '/author/:name',
-            name: 'Authors',
-            component: Home,
+            path: '/books/author/:name',
+            name: 'AuthorBooks',
+            component: Books,
         },
         {
-            path: '/series/:title',
-            name: 'Series',
-            component: Home,
+            path: '/books/series/:title',
+            name: 'SeriesBooks',
+            component: Books,
         },
         {
             path: '/add-book',
@@ -35,6 +37,36 @@ export default new Router({
             path: '/edit-book/:id',
             name: 'EditBook',
             component: EditBook,
+        },
+        {
+            path: '/authors',
+            name: 'Authors',
+            component: Authors,
+        },
+        {
+            path: '/add-author',
+            name: 'AddAuthor',
+            component: EditAuthor,
+        },
+        {
+            path: '/edit-author/:id',
+            name: 'EditAuthor',
+            component: EditAuthor,
+        },
+        {
+            path: '/series',
+            name: 'Series',
+            component: Series,
+        },
+        {
+            path: '/add-series',
+            name: 'AddSeries',
+            component: EditSeries,
+        },
+        {
+            path: '/edit-series/:id',
+            name: 'EditSeries',
+            component: EditSeries,
         },
     ],
 });

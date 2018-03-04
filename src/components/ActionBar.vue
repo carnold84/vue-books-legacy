@@ -14,19 +14,31 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 .action-bar {
     width: 100%;
     height: 40px;
     font-size: 1em;
     margin: 0;
+    flex-shrink: 0;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
     display: flex;
+
+    &.has-border {
+        border-bottom: #dddddd solid 1px;
+    }
 }
-.action-bar.has-border {
-    border-bottom: #dddddd solid 1px;
+h1 {
+    font-size: 1.1em;
+    font-weight: normal;
+    color: #ffffff;
+    margin: 0;
+}
+h2 {
+    font-size: 1.2em;
+    font-weight: normal;
+    margin: 0;
 }
 </style>
