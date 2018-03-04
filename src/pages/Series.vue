@@ -1,7 +1,7 @@
 <template>
     <Page id="series">
         <template slot="header-left">
-            <router-link to="/">Vue Books</router-link>
+            <router-link to="/">{{appName}}</router-link>
             <h2>/ Series</h2>
         </template>
         <template slot="content">
@@ -28,6 +28,7 @@
 
 <script>
 import store from '@/store';
+import {appMixins} from '@/mixins';
 import Page from '@/components/Page';
 import HeaderBar from '@/components/HeaderBar';
 import ActionBar from '@/components/ActionBar';
@@ -53,11 +54,14 @@ export default {
         RoundLinkButton,
         SeriesItem,
     },
+    mixins: [
+        appMixins,
+    ],
     computed: {
         sortedSeries () {
             let seriesData = [];
-            this.series.allIds.forEach(seriesId => {
-                const data = this.series.byId[seriesId];
+            this.data.series.allIds.forEach(seriesId => {
+                const data = this.data.series.byId[seriesId];
                 let series = {
                     ...data,
                     url: `/series/${seriesId}`,

@@ -34,8 +34,8 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+@import 'node_modules/include-media/dist/_include-media.scss';
 .page {
     position: absolute;
     width: 100%;
@@ -48,6 +48,7 @@ export default {
 }
 .main {
     width: 100%;
+    flex-grow: 1;
     align-items: center;
     flex-direction: column;
     display: flex;
@@ -56,7 +57,12 @@ export default {
 .content {
     width: 100%;
     max-width: 1080px;
-    padding: 40px;
+    padding: 20px 40px 40px;
+}
+@include media("<=tablet") {
+    .content {
+        padding: 20px;
+    }
 }
 h1 {
     font-size: 1.1em;

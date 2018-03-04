@@ -1,7 +1,7 @@
 <template>
     <Page id="authors">
         <template slot="header-left">
-            <router-link to="/">Vue Books</router-link>
+            <router-link to="/">{{appName}}</router-link>
             <h2>/ Authors</h2>
         </template>
         <template slot="content">
@@ -28,6 +28,7 @@
 
 <script>
 import store from '@/store';
+import {appMixins} from '@/mixins';
 import Page from '@/components/Page';
 import ActionBar from '@/components/ActionBar';
 import ContentMessage from '@/components/ContentMessage';
@@ -51,11 +52,14 @@ export default {
         RoundLinkButton,
         AuthorItem,
     },
+    mixins: [
+        appMixins,
+    ],
     computed: {
         sortedAuthors () {
             let authors = [];
-            this.authors.allIds.forEach(authorId => {
-                const data = this.authors.byId[authorId];
+            this.data.authors.allIds.forEach(authorId => {
+                const data = this.data.authors.byId[authorId];
                 let author = {
                     ...data,
                     url: `/author/${authorId}`,

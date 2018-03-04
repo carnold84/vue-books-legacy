@@ -9,9 +9,6 @@
         <div class="cell">
             <slot name="cell3"></slot>
         </div>
-        <div class="cell">
-            <slot name="cell4"></slot>
-        </div>
         <div class="actions">
             <slot name="actions"></slot>
         </div>
@@ -25,6 +22,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'node_modules/include-media/dist/_include-media.scss';
 .list-item {
     height: 50px;
     padding: 0 10px;
@@ -51,13 +49,10 @@ export default {
         flex-grow: 1;
     }
     &:nth-child(2) {
-        flex-basis: 30%;
+        flex-basis: 40%;
     }
     &:nth-child(3) {
-        flex-basis: 20%;
-    }
-    &:nth-child(4) {
-        flex-basis: 15%;
+        flex-basis: 25%;
     }
 }
 .actions {
@@ -71,6 +66,55 @@ export default {
 }
 .actions > :last-child {
     margin: 0;
+}
+@include media("<=tablet") {
+    .list-item {
+        height: auto;
+        padding: 14px;
+        margin: 0 0 10px;
+        border: #eeeeee solid 1px;
+        grid-template-columns: 28% 28% 28% 16%;
+        grid-template-rows: 26px 26px 26px;
+        display: grid;
+    }
+    .cell {
+        padding: 0;
+        white-space: nowrap;
+        overflow: hidden;
+
+        &:nth-child(1) {
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
+        &:nth-child(2) {
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 2;
+            grid-row-end: 2;
+        }
+        &:nth-child(3) {
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 3;
+            grid-row-end: 3;
+        }
+    }
+    .actions {
+        grid-column-start: 4;
+        grid-column-end: 4;
+        grid-row-start: 1;
+        grid-row-end: 4;
+        padding: 0 0 0 10px;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+
+        > * {
+            margin: 0 0 10px 0;
+        }
+    }
 }
 </style>
 <style lang="scss">
@@ -90,13 +134,13 @@ export default {
         .title-text {
             border-bottom-style: dotted;
             border-bottom-width: 1px;
-            border-bottom-color: #1e70ce;
+            border-bottom-color: var(--primary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         a:hover .title-text {
-            border-bottom-color: #e98400;
+            border-bottom-color: var(--secondary);
         }
     }
 }

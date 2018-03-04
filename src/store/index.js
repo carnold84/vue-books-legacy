@@ -1,30 +1,47 @@
-import api from '../api/local-storage';
+import defaultApi from '../api/local-storage';
+
+let api = defaultApi;
 
 const store = {
     debug: true,
     state: {
-        books: {
-            allIds: [],
-            byId: {},
+        config: undefined,
+        data: {
+            books: {
+                allIds: [],
+                byId: {},
+            },
+            authors: {
+                allIds: [],
+                byId: {},
+            },
+            authorBook: [],
+            series: {
+                allIds: [],
+                byId: {},
+            },
+            seriesBook: [],
         },
-        authors: {
-            allIds: [],
-            byId: {},
-        },
-        authorBook: [],
-        series: {
-            allIds: [],
-            byId: {},
-        },
-        seriesBook: [],
     },
-    init () {
+    init (onComplete) {
         if (this.debug) {
             console.info('init triggered');
         }
 
+        this.state.config = window.app.config;
+        const CustomApi = window[this.state.config.app.apiName];
+        api = CustomApi !== undefined ? new CustomApi() : api;
+        api.init(this.state.config.dbName, response => {
+            this.state.data = response.data;
+
+            if (onComplete) {
+                onComplete();
+            }
+        });
+    },
+    getAllData () {
         api.getAllData(response => {
-            this.state = response.data;
+            this.state.data = response.data;
         });
     },
     addBook (data) {
@@ -33,7 +50,7 @@ const store = {
         }
 
         api.addBook(data, response => {
-            this.state = response.data;
+            this.state.data = response.data;
         });
     },
     removeBook (id) {
@@ -42,7 +59,7 @@ const store = {
         }
 
         api.removeBook(id, response => {
-            this.state = response.data;
+            this.state.data = response.data;
         });
     },
     addAuthor (data) {
@@ -51,7 +68,7 @@ const store = {
         }
 
         api.addAuthor(data, response => {
-            this.state = response.data;
+            this.state.data = response.data;
         });
     },
     removeAuthor (id) {
@@ -60,7 +77,7 @@ const store = {
         }
 
         api.removeAuthor(id, response => {
-            this.state = response.data;
+            this.state.data = response.data;
         });
     },
     addSeries (data) {
@@ -69,7 +86,7 @@ const store = {
         }
 
         api.addSeries(data, response => {
-            this.state = response.data;
+            this.state.data = response.data;
         });
     },
     removeSeries (id) {
@@ -78,14 +95,8 @@ const store = {
         }
 
         api.removeSeries(id, response => {
-            this.state = response.data;
+            this.state.data = response.data;
         });
-    },
-    updateState (state) {
-        if (this.debug) {
-            console.info('updateState triggered with', state);
-        }
-        this.state = state;
     },
 };
 

@@ -53,15 +53,14 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .ui-button {
     font-size: 14px;
     line-height: 17px;
-    color: rgba(0, 0, 0, 0.65);
+    color: var(--font-color-secondary);
     padding: 0 12px;
-    border: #dddddd solid 1px;
-    background-color: #ffffff;
+    border: var(--button-border-color) solid 1px;
+    background-color: var(--button-bg-color);
     border-radius: 3px;
     box-shadow: rgba(0, 0, 0, 0.15) 0 1px 1px;
     cursor: pointer;
@@ -69,18 +68,20 @@ export default {
     display: flex;
 
     &:hover {
-        color: rgba(0, 0, 0, 0.8);
+        color: var(--font-color-primary);
+        background-color: var(--button-bg-color__HOVER);
+        border: var(--button-border-color__HOVER) solid 1px;
         box-shadow: rgba(0, 0, 0, 0.25) 0 1px 3px;
     }
     &.is-primary {
         color: rgba(255, 255, 255, 1);
-        border: #1e70ce solid 1px;
-        background-color: #1e70ce;
+        border: var(--button-primary-border-color) solid 1px;
+        background-color: var(--button-primary-bg-color);
         box-shadow: rgba(0, 0, 0, 0.35) 0 1px 2px;
 
         &:hover {
-            border: #3489eb solid 1px;
-            background-color: #3489eb;
+            border: var(--button-primary-border-color__HOVER) solid 1px;
+            background-color: var(--button-primary-bg-color__HOVER);
             box-shadow: rgba(0, 0, 0, 0.55) 0 1px 4px;
         }
     }

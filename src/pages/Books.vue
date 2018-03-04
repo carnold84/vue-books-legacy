@@ -1,12 +1,12 @@
 <template>
-    <Page id="home">
+    <Page id="books">
         <template slot="header-left">
-            <router-link to="/">Vue Books</router-link>
+            <router-link to="/">{{appName}}</router-link>
         </template>
         <template slot="content">
             <action-bar :hasBorder="sortedBooks.length === 0">
                 <div class="action-bar-content">
-                    <h2>Books</h2>
+                    <h2>{{title}}</h2>
                 </div>
                 <div class="action-bar-actions">
                     <round-link-button to="/add-book">
@@ -27,6 +27,7 @@
 
 <script>
 import store from '@/store';
+import {appMixins, authorMixins, seriesMixins} from '@/mixins';
 import Page from '@/components/Page';
 import HeaderBar from '@/components/HeaderBar';
 import ActionBar from '@/components/ActionBar';
@@ -38,7 +39,7 @@ import BookItem from '@/containers/BookItem';
 import '@/compiled-icons/add';
 
 export default {
-    name: 'Home',
+    name: 'Books',
     data () {
         return store.state;
     },
@@ -52,34 +53,57 @@ export default {
         UiList,
         BookItem,
     },
+    mixins: [
+        appMixins,
+        authorMixins,
+        seriesMixins,
+    ],
     computed: {
-        sortedBooks () {
-            let authorId;
-            let seriesId;
+        authorId () {
             if (this.$route.name === 'AuthorBooks') {
-                authorId = this.$route.params.name;
-            } else if (this.$route.name === 'SeriesBooks') {
-                seriesId = this.$route.params.title;
+                return this.$route.params.name;
+            } else {
+                return undefined;
             }
+        },
+        seriesId () {
+            if (this.$route.name === 'SeriesBooks') {
+                return this.$route.params.title;
+            } else {
+                return undefined;
+            }
+        },
+        title () {
+            if (this.authorId) {
+                const author = this.getAuthorName(this.authorId);
+                return `Books by ${author}`;
+            } else if (this.seriesId) {
+                const series = this.getSeriesTitle(this.seriesId);
+                return `Books in ${series}`;
+            } else {
+                return `Books`;
+            }
+        },
+        sortedBooks () {
             let books = [];
-            this.books.allIds.forEach(bookId => {
-                const data = this.books.byId[bookId];
+            this.data.books.allIds.forEach(bookId => {
+                const data = this.data.books.byId[bookId];
                 let book = {
                     ...data,
                     authors: this.getBookAuthors(bookId),
                     series: this.getBookSeries(data.seriesId),
-                    url: this.getUrl(bookId),
-                    editUrl: this.getEditUrl(bookId),
+                    url: `/book/${bookId}`,
+                    editUrl: `/edit-book/${bookId}`,
                 };
-                if (authorId) {
+                if (this.authorId) {
                     const isByAuthor = book.authors.find(element => {
-                        return element.id === authorId;
+                        return element.id === this.authorId;
                     });
                     if (isByAuthor) {
                         books.push(book);
                     }
-                } else if (seriesId) {
-                    if (book.series && book.series.id === seriesId) {
+                } else if (this.seriesId) {
+                    if (book.series && book.series.id === this.seriesId) {
                         books.push(book);
                     }
                 } else {
@@ -94,59 +118,18 @@ export default {
         onRemove (id) {
             store.removeBook(id);
         },
-        getUrl (bookId) {
-            return `/book/${bookId}`;
-        },
-        getEditUrl (bookId) {
-            return `/edit-book/${bookId}`;
-        },
         getBookAuthors (bookId) {
             let authors = [];
-            this.authorBook.forEach(record => {
+            this.data.authorBook.forEach(record => {
                 if (record.bookId === bookId) {
-                    authors.push(this.authors.byId[record.authorId]);
+                    authors.push(this.data.authors.byId[record.authorId]);
                 }
             });
             return authors;
         },
         getBookSeries (seriesId) {
-            return this.series.byId[seriesId];
+            return this.data.series.byId[seriesId];
         },
     },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-#home {
-    align-items: center;
-    flex-direction: column;
-    display: flex;
-}
-.content {
-    width: 100%;
-    padding: 20px 40px 0;
-    justify-content: center;
-    flex-direction: column;
-    display: flex;
-}
-h1 {
-    font-size: 1.1em;
-    font-weight: normal;
-    color: #ffffff;
-    margin: 0;
-}
-h2 {
-    font-size: 1.2em;
-    font-weight: normal;
-    margin: 0;
-}
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-li {
-    display: inline-block;
-    margin: 0 10px;
-}
-</style>

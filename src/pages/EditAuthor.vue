@@ -1,8 +1,8 @@
 <template>
     <Page id="edit-author">
         <template slot="header-left">
-            <router-link to="/">Vue Books</router-link>
-            <h2>/ Add Author</h2>
+            <router-link to="/">{{appName}}</router-link>
+            <h2>/ {{title}}</h2>
         </template>
         <template slot="content">
             <form v-on:submit.prevent="onSubmit">
@@ -12,7 +12,7 @@
                 <div class="anim-section">
                     <text-field label="Last Name" name="lastName" :value="authorData.lastName" />
                 </div>
-                <div class="buttons anim-section">
+                <div class="form-buttons anim-section">
                     <ui-button :height="32" :onClick="onCancel">Cancel</ui-button>
                     <ui-button :isPrimary="true" :height="32">{{submitLabel}}</ui-button>
                 </div>
@@ -24,6 +24,7 @@
 <script>
 import serialize from 'form-serialize';
 import store from '@/store';
+import {appMixins} from '@/mixins';
 import Page from '@/components/Page';
 import HeaderBar from '@/components/HeaderBar';
 import TextField from '@/components/TextField';
@@ -37,6 +38,9 @@ export default {
         TextField,
         UiButton,
     },
+    mixins: [
+        appMixins,
+    ],
     data () {
         return store.state;
     },
@@ -49,6 +53,13 @@ export default {
         wrapper.classList.add('show');
     },
     computed: {
+        title () {
+            if (this.$route.params.id) {
+                return 'Edit Author';
+            } else {
+                return 'Add Author';
+            }
+        },
         submitLabel () {
             if (this.$route.params.id) {
                 return 'Save Changes';
@@ -58,7 +69,7 @@ export default {
         },
         authorData () {
             if (this.$route.params.id) {
-                return this.authors.byId[this.$route.params.id];
+                return this.data.authors.byId[this.$route.params.id];
             } else {
                 return {};
             }
@@ -78,27 +89,3 @@ export default {
     },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-.content {
-    max-width: 1080px;
-    width: 100%;
-    padding: 40px 40px 0;
-    flex-direction: column;
-    display: flex;
-}
-.buttons {
-    width: 100%;
-    justify-content: flex-end;
-    display: flex;
-
-    > * {
-        margin: 0 10px 0 0;
-
-        &:last-child {
-            margin: 0;
-        }
-    }
-}
-</style>
