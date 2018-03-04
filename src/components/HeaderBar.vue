@@ -20,8 +20,8 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+@import 'node_modules/include-media/dist/_include-media.scss';
 .header-bar {
     width: 100%;
     height: 50px;
@@ -29,8 +29,8 @@ export default {
     color: #ffffff;
     margin: 0;
     padding: 0 40px;
-    background-color: $primary;
-    border-bottom: $primary solid 1px;
+    background-color: var(--primary);
+    border-bottom: var(--primary) solid 1px;
     box-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
     flex-shrink: 0;
     justify-content: space-between;
@@ -61,7 +61,7 @@ export default {
 
     a:hover {
         color: #e98400;
-        border-bottom: $secondary dotted 1px;
+        border-bottom: var(--secondary) dotted 1px;
         margin: 1px 5px 0 0;
     }
 }

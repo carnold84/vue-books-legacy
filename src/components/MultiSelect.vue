@@ -54,7 +54,6 @@ export default {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .multi-select-container {
     flex-grow: 1;
@@ -66,23 +65,23 @@ export default {
 </style>
 <style lang="scss">
 .multiselect__tag {
-    background: $primary;
+    background: var(--primary);
 }
 .multiselect__tag-icon {
     &:focus {
-        background: $primary;
+        background: var(--primary);
     }
     &:hover {
-        background: darken($primary, 10);
+        background: var(--primary__HOVER);
     }
     &:after {
         color: #ffffff;
     }
 }
 .multiselect__option--highlight {
-    background: $primary;
+    background: var(--primary);
 }
 .multiselect__option--highlight::after {
-    background: $primary;
+    background: var(--primary);
 }
 </style>

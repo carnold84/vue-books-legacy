@@ -12,13 +12,12 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .loading {
     position: absolute;
     width: 100%;
     height: 100%;
-    color: $loading-icon-color;
+    color: var(--loading-icon-color);
     margin: 0;
     animation: pulse 2500ms infinite ease;
     overflow: hidden;

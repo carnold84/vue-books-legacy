@@ -1,45 +1,47 @@
-import _merge from 'lodash/merge';
+import defaultApi from '../api/local-storage';
 
-import api from '../api/local-storage';
+let api = defaultApi;
 
 const store = {
     debug: true,
     state: {
         config: undefined,
-        books: {
-            allIds: [],
-            byId: {},
+        data: {
+            books: {
+                allIds: [],
+                byId: {},
+            },
+            authors: {
+                allIds: [],
+                byId: {},
+            },
+            authorBook: [],
+            series: {
+                allIds: [],
+                byId: {},
+            },
+            seriesBook: [],
         },
-        authors: {
-            allIds: [],
-            byId: {},
-        },
-        authorBook: [],
-        series: {
-            allIds: [],
-            byId: {},
-        },
-        seriesBook: [],
     },
-    init () {
+    init (onComplete) {
         if (this.debug) {
             console.info('init triggered');
         }
 
-        fetch('./static/config/config.json')
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                this.state.config = data;
-                api.init(this.state.config.dbName, response => {
-                    this.state = _merge(this.state, response.data);
-                });
-            });
+        this.state.config = window.app.config;
+        const CustomApi = window[this.state.config.app.apiName];
+        api = CustomApi !== undefined ? new CustomApi() : api;
+        api.init(this.state.config.dbName, response => {
+            this.state.data = response.data;
+
+            if (onComplete) {
+                onComplete();
+            }
+        });
     },
     getAllData () {
         api.getAllData(response => {
-            this.state = _merge(this.state, response.data);
+            this.state.data = response.data;
         });
     },
     addBook (data) {
@@ -48,7 +50,7 @@ const store = {
         }
 
         api.addBook(data, response => {
-            this.state = _merge(this.state, response.data);
+            this.state.data = response.data;
         });
     },
     removeBook (id) {
@@ -57,7 +59,7 @@ const store = {
         }
 
         api.removeBook(id, response => {
-            this.state = _merge(this.state, response.data);
+            this.state.data = response.data;
         });
     },
     addAuthor (data) {
@@ -66,7 +68,7 @@ const store = {
         }
 
         api.addAuthor(data, response => {
-            this.state = _merge(this.state, response.data);
+            this.state.data = response.data;
         });
     },
     removeAuthor (id) {
@@ -75,7 +77,7 @@ const store = {
         }
 
         api.removeAuthor(id, response => {
-            this.state = _merge(this.state, response.data);
+            this.state.data = response.data;
         });
     },
     addSeries (data) {
@@ -84,7 +86,7 @@ const store = {
         }
 
         api.addSeries(data, response => {
-            this.state = _merge(this.state, response.data);
+            this.state.data = response.data;
         });
     },
     removeSeries (id) {
@@ -93,7 +95,7 @@ const store = {
         }
 
         api.removeSeries(id, response => {
-            this.state = _merge(this.state, response.data);
+            this.state.data = response.data;
         });
     },
 };

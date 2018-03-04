@@ -35,6 +35,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'node_modules/include-media/dist/_include-media.scss';
 .page {
     position: absolute;
     width: 100%;
@@ -47,7 +48,7 @@ export default {
 }
 .main {
     width: 100%;
-    min-height: 100%;
+    flex-grow: 1;
     align-items: center;
     flex-direction: column;
     display: flex;

@@ -17,16 +17,22 @@ export default {
         return store.state;
     },
     created () {
-        store.init();
+        store.init(this.setTitle);
     },
     computed: {
         isConfigLoading () {
             return this.config === undefined;
         },
     },
+    methods: {
+        setTitle () {
+            const elTitle = document.querySelector('title');
+            elTitle.innerHTML = this.config.app.name;
+        },
+    },
 };
 </script>
 <style lang="scss">
-    @import 'main.scss';
+    @import 'styles/main.scss';
 </style>
 

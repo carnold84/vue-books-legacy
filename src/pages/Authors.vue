@@ -58,8 +58,8 @@ export default {
     computed: {
         sortedAuthors () {
             let authors = [];
-            this.authors.allIds.forEach(authorId => {
-                const data = this.authors.byId[authorId];
+            this.data.authors.allIds.forEach(authorId => {
+                const data = this.data.authors.byId[authorId];
                 let author = {
                     ...data,
                     url: `/author/${authorId}`,

@@ -9,7 +9,7 @@ export const appMixins = {
 export const authorMixins = {
     methods: {
         getAuthor (id) {
-            return this.authors.byId[id];
+            return this.data.authors.byId[id];
         },
         getAuthorName (id) {
             const author = this.getAuthor(id);
@@ -28,7 +28,7 @@ export const authorMixins = {
 export const seriesMixins = {
     methods: {
         getSeries (id) {
-            return this.series.byId[id];
+            return this.data.series.byId[id];
         },
         getSeriesTitle (id) {
             const series = this.getSeries(id);

@@ -43,9 +43,6 @@ export default {
     data () {
         return store.state;
     },
-    created () {
-        store.getAllData();
-    },
     components: {
         Page,
         HeaderBar,
@@ -89,8 +86,8 @@ export default {
         },
         sortedBooks () {
             let books = [];
-            this.books.allIds.forEach(bookId => {
-                const data = this.books.byId[bookId];
+            this.data.books.allIds.forEach(bookId => {
+                const data = this.data.books.byId[bookId];
                 let book = {
                     ...data,
                     authors: this.getBookAuthors(bookId),
@@ -123,15 +120,15 @@ export default {
         },
         getBookAuthors (bookId) {
             let authors = [];
-            this.authorBook.forEach(record => {
+            this.data.authorBook.forEach(record => {
                 if (record.bookId === bookId) {
-                    authors.push(this.authors.byId[record.authorId]);
+                    authors.push(this.data.authors.byId[record.authorId]);
                 }
             });
             return authors;
         },
         getBookSeries (seriesId) {
-            return this.series.byId[seriesId];
+            return this.data.series.byId[seriesId];
         },
     },
 };

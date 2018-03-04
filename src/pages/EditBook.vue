@@ -1,7 +1,7 @@
 <template>
     <Page id="edit-book">
         <template slot="header-left">
-            <router-link to="/">Vue Books</router-link>
+            <router-link to="/">{{appName}}</router-link>
             <h2>/ Add Book</h2>
         </template>
         <template slot="content">
@@ -40,6 +40,7 @@
 <script>
 import serialize from 'form-serialize';
 import store from '@/store';
+import {appMixins} from '@/mixins';
 import Page from '@/components/Page';
 import TextField from '@/components/TextField';
 import UiButton from '@/components/UiButton';
@@ -58,6 +59,9 @@ export default {
         RoundLinkButton,
         TagChip,
     },
+    mixins: [
+        appMixins,
+    ],
     data () {
         return store.state;
     },
@@ -72,7 +76,7 @@ export default {
     computed: {
         bookData () {
             if (this.$route.params.id) {
-                return this.books.byId[this.$route.params.id];
+                return this.data.books.byId[this.$route.params.id];
             } else {
                 return {};
             }
@@ -83,14 +87,14 @@ export default {
             let values = [];
 
             if (this.bookData !== undefined) {
-                this.authorBook.forEach(record => {
+                this.data.authorBook.forEach(record => {
                     if (this.bookData.id === record.bookId) {
                         bookAuthors.push(record.authorId);
                     }
                 });
             }
-            this.authors.allIds.forEach(authorId => {
-                const author = this.authors.byId[authorId];
+            this.data.authors.allIds.forEach(authorId => {
+                const author = this.data.authors.byId[authorId];
                 const authorData = {
                     ...author,
                     label: `${author.lastName}, ${author.firstName}`,
@@ -111,8 +115,8 @@ export default {
             let options = [];
             let values = null;
 
-            this.series.allIds.forEach(seriesId => {
-                const series = this.series.byId[seriesId];
+            this.data.series.allIds.forEach(seriesId => {
+                const series = this.data.series.byId[seriesId];
                 const seriesData = {
                     ...series,
                     label: series.title,

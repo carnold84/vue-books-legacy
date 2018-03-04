@@ -60,8 +60,8 @@ export default {
     computed: {
         sortedSeries () {
             let seriesData = [];
-            this.series.allIds.forEach(seriesId => {
-                const data = this.series.byId[seriesId];
+            this.data.series.allIds.forEach(seriesId => {
+                const data = this.data.series.byId[seriesId];
                 let series = {
                     ...data,
                     url: `/series/${seriesId}`,

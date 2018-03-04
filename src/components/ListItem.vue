@@ -22,6 +22,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'node_modules/include-media/dist/_include-media.scss';
 .list-item {
     height: 50px;
     padding: 0 10px;
@@ -133,13 +134,13 @@ export default {
         .title-text {
             border-bottom-style: dotted;
             border-bottom-width: 1px;
-            border-bottom-color: $primary;
+            border-bottom-color: var(--primary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         a:hover .title-text {
-            border-bottom-color: $secondary;
+            border-bottom-color: var(--secondary);
         }
     }
 }

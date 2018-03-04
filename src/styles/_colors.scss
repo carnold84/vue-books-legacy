@@ -1,12 +1,14 @@
-$primary: #1e70ce;
-$secondary: #e98400;
-
-$button-bg-color: #ffffff;
-$button-bg-color__HOVER: $button-bg-color;
-$button-border-color: #eeeeee;
-$button-border-color__HOVER: $button-border-color;
-$button-primary-bg-color: $primary;
-$button-primary-border-color: $primary;
-$button-primary-bg-color__HOVER: lighten($primary, 10%);
-$button-primary-border-color__HOVER: lighten($primary, 10%);
-$loading-icon-color: $primary;
+:root {
+    --primary: #1e70ce;
+    --secondary: #e98400;
+    
+    --button-bg-color: #ffffff;
+    --button-bg-color__HOVER: var(--button-bg-color);
+    --button-border-color: #eeeeee;
+    --button-border-color__HOVER: var(--button-border-color);
+    --button-primary-bg-color: var(--primary);
+    --button-primary-border-color: var(--primary);
+    --button-primary-bg-color__HOVER: var(--primary);
+    --button-primary-border-color__HOVER: var(--primary);
+    --loading-icon-color: var(--primary);
+}

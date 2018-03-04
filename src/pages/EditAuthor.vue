@@ -1,8 +1,8 @@
 <template>
     <Page id="edit-author">
         <template slot="header-left">
-            <router-link to="/">Vue Books</router-link>
-            <h2>/ Add Author</h2>
+            <router-link to="/">{{appName}}</router-link>
+            <h2>/ {{title}}</h2>
         </template>
         <template slot="content">
             <form v-on:submit.prevent="onSubmit">
@@ -24,6 +24,7 @@
 <script>
 import serialize from 'form-serialize';
 import store from '@/store';
+import {appMixins} from '@/mixins';
 import Page from '@/components/Page';
 import HeaderBar from '@/components/HeaderBar';
 import TextField from '@/components/TextField';
@@ -37,6 +38,9 @@ export default {
         TextField,
         UiButton,
     },
+    mixins: [
+        appMixins,
+    ],
     data () {
         return store.state;
     },
@@ -49,6 +53,13 @@ export default {
         wrapper.classList.add('show');
     },
     computed: {
+        title () {
+            if (this.$route.params.id) {
+                return 'Edit Author';
+            } else {
+                return 'Add Author';
+            }
+        },
         submitLabel () {
             if (this.$route.params.id) {
                 return 'Save Changes';
@@ -58,7 +69,7 @@ export default {
         },
         authorData () {
             if (this.$route.params.id) {
-                return this.authors.byId[this.$route.params.id];
+                return this.data.authors.byId[this.$route.params.id];
             } else {
                 return {};
             }
